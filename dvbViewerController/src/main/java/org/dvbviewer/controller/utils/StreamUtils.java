@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
+import org.dvbviewer.controller.ui.player.PlayerActivity;
+
 import com.google.gson.Gson;
 
 import org.dvbviewer.controller.R;
@@ -59,14 +61,48 @@ public class StreamUtils {
         return context.getResources().getStringArray(R.array.ffmpegPresets)[preset.getEncodingSpeed()];
     }
 
+    /**
+     * Entry point for "quick stream" (tap on channel thumbnail / media icon).
+     * Builds the stream URL based on the saved direct/transcoded preference,
+     * then routes to the internal ExoPlayer or an external player app depending
+     * on KEY_USE_INTERNAL_PLAYER stored in dvbviewer_preferences.
+     *
+     * NOTE: StreamConfig uses its own call chain that also checks
+     * KEY_USE_INTERNAL_PLAYER in startVideoIntent(). This method handles the
+     * separate "quick tap" path that bypasses StreamConfig entirely.
+     */
     public static Intent buildQuickUrl(Context context, long id, String title, FileType fileType) {
-        final SharedPreferences prefs = new DVBViewerPreferences(context).getStreamPrefs();
-        boolean direct = prefs.getBoolean(DVBViewerPreferences.KEY_STREAM_DIRECT, true);
+        final DVBViewerPreferences dvbPrefs  = new DVBViewerPreferences(context);
+        final SharedPreferences    streamSp  = dvbPrefs.getStreamPrefs();
+
+        // 1. Build the stream URL using the saved direct/transcoded preference
+        final boolean direct = streamSp.getBoolean(DVBViewerPreferences.KEY_STREAM_DIRECT, true);
+        final Intent  externalIntent;
         if (direct) {
-            return getDirectUrl(id, title, fileType);
+            externalIntent = getDirectUrl(id, title, fileType);
         } else {
-            return getTranscodedUrl(context, id, title, StreamUtils.getDefaultPreset(prefs), fileType, 0);
+            externalIntent = getTranscodedUrl(context, id, title,
+                    StreamUtils.getDefaultPreset(streamSp), fileType, 0);
         }
+
+        // 2. Decide: internal ExoPlayer or external app?
+        //    Reads from dvbviewer_preferences (main file), NOT stream prefs.
+        final boolean useInternal = dvbPrefs.getBoolean(
+                DVBViewerPreferences.KEY_USE_INTERNAL_PLAYER, true);
+        final String  url      = externalIntent.getDataString();
+        final String  mimeType = externalIntent.getType() != null ? externalIntent.getType() : "";
+
+        Log.d(Tag, "buildQuickUrl: direct=" + direct
+                + "  useInternal=" + useInternal
+                + "  url=" + url);
+
+        if (useInternal && url != null && !url.isEmpty()) {
+            Log.d(Tag, "buildQuickUrl → PlayerActivity (internal)");
+            return getInternalPlayerIntent(context, url, mimeType, title);
+        }
+
+        Log.d(Tag, "buildQuickUrl → external player");
+        return externalIntent;
     }
 
     private static Intent addTitle(Intent intent, String title) {
@@ -102,6 +138,18 @@ public class StreamUtils {
         videoIntent.setDataAndType(Uri.parse(url), preset.getMimeType());
         addTitle(videoIntent, title);
         return videoIntent;
+    }
+
+    /**
+     * Creates an Intent targeting the internal ExoPlayer activity.
+     * Called instead of an ACTION_VIEW intent when KEY_USE_INTERNAL_PLAYER is true.
+     */
+    public static Intent getInternalPlayerIntent(Context context, String url, String mimeType, String title) {
+        Intent intent = new Intent(context, PlayerActivity.class);
+        intent.putExtra(PlayerActivity.EXTRA_URL, url);
+        intent.putExtra(PlayerActivity.EXTRA_MIME_TYPE, mimeType != null ? mimeType : "");
+        intent.putExtra(PlayerActivity.EXTRA_TITLE, title != null ? title : "");
+        return intent;
     }
 
     public static Intent getDirectUrl(long id, String title, FileType fileType) {

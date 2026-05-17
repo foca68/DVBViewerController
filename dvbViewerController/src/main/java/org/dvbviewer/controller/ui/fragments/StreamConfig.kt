@@ -213,12 +213,49 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
     }
 
     private fun startVideoIntent(fileType: FileType?) {
-        val videoIntent: Intent = getVideoIntent(fileType) ?: return
-        startActivity(videoIntent)
+        val externalIntent: Intent = getVideoIntent(fileType) ?: return
+
+        // ── Diagnostic: read preference from both wrapper and raw SP ──────
+        // Note: `prefs` (field) = streamPrefs (dvbviewer_STREAM_preferences)
+        //        dvbPrefs.getBoolean() reads from dvbviewer_preferences (main)
+        val rawSp = requireContext()
+            .getSharedPreferences(DVBViewerPreferences.PREFS, android.content.Context.MODE_PRIVATE)
+        val rawValue      = rawSp.getBoolean(DVBViewerPreferences.KEY_USE_INTERNAL_PLAYER, true)
+        val keyPresent    = rawSp.contains(DVBViewerPreferences.KEY_USE_INTERNAL_PLAYER)
+        val dvbPrefs      = DVBViewerPreferences(requireContext())
+        val useInternal   = dvbPrefs.getBoolean(DVBViewerPreferences.KEY_USE_INTERNAL_PLAYER, true)
+
+        android.util.Log.d(TAG, "── startVideoIntent ──────────────────────────")
+        android.util.Log.d(TAG, "  SP file        : dvbviewer_preferences")
+        android.util.Log.d(TAG, "  key present    : $keyPresent")
+        android.util.Log.d(TAG, "  raw SP value   : $rawValue")
+        android.util.Log.d(TAG, "  useInternal    : $useInternal")
+        android.util.Log.d(TAG, "  externalIntent : ${externalIntent.data}")
+        android.util.Log.d(TAG, "  mimeType       : ${externalIntent.type}")
+
+        val launchIntent = if (useInternal) {
+            val url      = externalIntent.data?.toString()
+            if (url.isNullOrBlank()) {
+                android.util.Log.e(TAG, "  URL is null/blank — cannot launch internal player!")
+                externalIntent      // fallback to external
+            } else {
+                val mimeType = externalIntent.type ?: ""
+                android.util.Log.d(TAG, "  → launching PlayerActivity: url=$url")
+                StreamUtils.getInternalPlayerIntent(requireContext(), url, mimeType, mTitle ?: "")
+            }
+        } else {
+            android.util.Log.d(TAG, "  → launching EXTERNAL player (useInternal=false)")
+            externalIntent
+        }
+
+        android.util.Log.d(TAG, "  launchIntent component: ${launchIntent.component?.className}")
+        android.util.Log.d(TAG, "─────────────────────────────────────────────")
+
+        startActivity(launchIntent)
         if (getDialog() != null) {
             getDialog()?.dismiss()
         } else {
-            activity!!.finish()
+            activity?.finish()
         }
     }
 
@@ -295,6 +332,7 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
     companion object {
 
         private val gson = Gson()
+        const val TAG = "StreamConfig"
         val EXTRA_FILE_ID = "_fileID"
         val EXTRA_FILE_TYPE = "_fileType"
         val EXTRA_DIALOG_TITLE_RES = "_dialog_title_res"

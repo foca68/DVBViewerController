@@ -31,7 +31,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@android:id/empty"
-            android:layout_width="match_parent"
+            android:layout_width="445dp"
             android:layout_height="match_parent"
             android:gravity="center" />
     </FrameLayout>

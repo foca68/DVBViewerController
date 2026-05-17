@@ -124,6 +124,26 @@
     <string name="pref_item_channel_show_current_program_wifi_summary">Shows the current program in the channel list only if WIFI is connected</string>
     <string name="pref_item_channel_fav">Use Favourites</string>
     <string name="pref_item_channel_fav_summary">Shows the favourites instead of the channels</string>
+    <!-- Player preferences -->
+    <string name="pref_seperator_player">Player video intern</string>
+    <string name="pref_player_internal_title">Foloseste player intern</string>
+    <string name="pref_player_internal_summary">Redare video in aplicatie (ExoPlayer)</string>
+    <string name="pref_player_subtitle_size">Marime subtitrare (sp)</string>
+    <string name="pref_player_pip_title">Picture-in-Picture automat</string>
+    <string name="pref_player_pip_summary">Activeaza PiP la apasarea butonului Home</string>
+    <!-- Player UI strings -->
+    <string name="player_connecting">Se conecteaza la server…</string>
+    <string name="player_timeout">Serverul nu raspunde. Reincearca?</string>
+    <string name="player_retry">Reincearca</string>
+    <string name="player_cancel">Anuleaza</string>
+    <string name="player_subtitles">Subtitrari</string>
+    <string name="player_subtitles_off">Oprit</string>
+    <string name="player_pip">Picture-in-Picture</string>
+    <string name="player_play_pause">Redare / Pauza</string>
+    <string name="player_brightness">Luminozitate</string>
+    <string name="player_volume">Volum</string>
+    <string name="player_error_generic">Eroare la redare. Verifica conexiunea.</string>
+
     <!-- EPG Extern (XMLTV) preferences -->
     <string name="pref_seperator_xmltv">External EPG (XMLTV)</string>
     <string name="pref_xmltv_enabled_title">Enable external EPG</string>

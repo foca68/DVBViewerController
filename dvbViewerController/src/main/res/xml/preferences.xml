@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/pref_seperator_connection">
         <Preference
@@ -25,6 +26,31 @@
             android:key="KEY_CHANNELS_USE_FAVS"
             android:summary="@string/pref_item_channel_fav_summary"
             android:title="@string/pref_item_channel_fav" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_seperator_player">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="KEY_USE_INTERNAL_PLAYER"
+            android:summary="@string/pref_player_internal_summary"
+            android:title="@string/pref_player_internal_title" />
+
+        <SeekBarPreference
+            android:defaultValue="18"
+            android:key="KEY_PLAYER_SUBTITLE_SIZE"
+            android:max="32"
+            android:title="@string/pref_player_subtitle_size"
+            app:min="12"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="KEY_PLAYER_PIP_ON_HOME"
+            android:summary="@string/pref_player_pip_summary"
+            android:title="@string/pref_player_pip_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_seperator_xmltv">

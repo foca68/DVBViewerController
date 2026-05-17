@@ -86,6 +86,14 @@
             android:name=".ui.phone.XmltvMappingActivity"
             android:label="@string/pref_xmltv_mapping_title" />
 
+        <activity
+            android:name=".ui.player.PlayerActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Theme.DVB.NoActionBar" />
+
         <provider
             android:name=".data.api.DvbProvider"
             android:authorities="${applicationId}.provider"
