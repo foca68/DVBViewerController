@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="postRecoridngActions">
+        <item>Nicio acțiune</item>
+        <item>Oprire</item>
+        <item>Standby</item>
+        <item>Hibernare</item>
+    </string-array>
+
+    <string-array name="tracks">
+        <item>Pistă 1</item>
+        <item>Pistă 2</item>
+        <item>Pistă 3</item>
+        <item>Pistă 4</item>
+        <item>Pistă 5</item>
+        <item>Pistă 6</item>
+        <item>Pistă 7</item>
+        <item>Pistă 8</item>
+        <item>Pistă 9</item>
+        <item>Pistă 10</item>
+    </string-array>
+
+    <string-array name="epgMonitoring">
+        <item>Niciunul</item>
+        <item>Actualizare oră start/stop din EPG</item>
+        <item>Start/Stop după statusul EPG</item>
+    </string-array>
+
+    <string-array name="pref_xmltv_interval_entries">
+        <item>1 oră</item>
+        <item>6 ore</item>
+        <item>12 ore</item>
+        <item>24 ore</item>
+    </string-array>
+</resources>

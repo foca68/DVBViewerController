@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common -->
+    <string name="app_name">DVBViewer Controller</string>
+    <string name="remote">Telecomandă</string>
+    <string name="title">Titlu</string>
+    <string name="cancel">Anulează</string>
+    <string name="ok">OK</string>
+    <string name="refresh">Reîmprospătează</string>
+    <string name="record">Înregistrează</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
+    <string name="selected">selectat</string>
+    <string name="switch_to">Comută la canal</string>
+    <string name="minutes">minute</string>
+    <string name="gmt">GMT</string>
+    <string name="details">Detalii</string>
+    <string name="about">Despre</string>
+    <string name="common_colon">:&#160;</string>
+    <string name="about_app">Despre DVBViewer Controller</string>
+    <string name="version">Versiune aplicație:</string>
+    <string name="privacy_policy">Politică de confidențialitate</string>
+    <string name="common_all">Toate</string>
+    <string name="delete">Șterge</string>
+    <string name="none">Niciunul</string>
+    <string name="def">Implicit</string>
+    <!-- Channels -->
+    <string name="channelList">Listă canale</string>
+    <string name="refreshChannels">Sincronizează canale</string>
+    <string name="refresh_now_playing">Reîmprospătează EPG</string>
+    <string name="favourites">Favorite</string>
+    <string name="no_channels">Nu s-au găsit canale</string>
+    <string name="no_favourites">Nu s-au găsit favorite</string>
+    <!-- EPG -->
+    <string name="channelEPG">EPG canal</string>
+    <string name="today">Astăzi</string>
+    <string name="time">Oră</string>
+    <string name="now">Acum</string>
+    <string name="evening">Seară</string>
+    <string name="tomorrow">mâine</string>
+    <string name="previousDay">Ziua anterioară</string>
+    <string name="nextDay">Ziua următoare</string>
+    <string name="no_epg">Nu s-au găsit date EPG</string>
+    <!-- Recordings -->
+    <string name="recordings">Listă înregistrări</string>
+    <string name="no_recordings">Nu s-au găsit înregistrări</string>
+    <string name="recording_deleted">Șters</string>
+    <!-- Medias -->
+    <string name="medias">Media</string>
+    <!-- Timer -->
+    <string name="timer">Planificare</string>
+    <string name="createTimer">Creează planificare</string>
+    <string name="editTimer">Editează planificare</string>
+    <string name="date">Dată</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="channel">Canal</string>
+    <string name="postTimerAction">După înregistrare</string>
+    <string name="no_timer">Nu s-au găsit planificări</string>
+    <!-- Streaming -->
+    <string name="streamConfig">Configurare stream</string>
+    <string name="quality">Calitate</string>
+    <string name="ffmpegpreset">Viteză encodare</string>
+    <string name="streamStart">Pornește stream</string>
+    <string name="streamTranscoded">Stream transcodat</string>
+    <string name="streamDirect">Stream direct</string>
+    <string name="stream_position">Poziție</string>
+    <string name="stream_hours_hint">OO</string>
+    <string name="stream_minutes_hint">MM</string>
+    <string name="stream_seconds_hint">SS</string>
+    <!-- Tasks -->
+    <string name="tasks">Acțiuni</string>
+    <string name="task_execute_security_question">Execută \"{0}\"?</string>
+    <string name="task_executed">Acțiunea \"{0}\" executată cu succes</string>
+    <string name="send_wol_packet">Trimite pachet WOL</string>
+    <!-- Status -->
+    <string name="status">Status</string>
+    <string name="status_server_version">Versiune server</string>
+    <string name="status_current_recordings">Înregistrări active</string>
+    <string name="status_current_clients">Clienți conectați</string>
+    <string name="status_current_rtsp_clients">Clienți RTSP conectați</string>
+    <string name="status_current_unicast_clients">Clienți unicast conectați</string>
+    <string name="status_next_Rec">Următoarea înregistrare</string>
+    <string name="status_next_timer">Următoarea planificare</string>
+    <string name="status_last_ui_access">Ultimul acces web</string>
+    <string name="status_standby_blocked">Standby blocat</string>
+    <string name="status_tunercount">Tunere utilizate</string>
+    <string name="status_stream_tunercount">Tunere stream</string>
+    <string name="status_record_tunercount">Tunere înregistrare</string>
+    <string name="status_recfiles">Înregistrări</string>
+    <string name="status_epg_update_running">Actualizare EPG în curs</string>
+    <string name="status_epg_before">Timp înainte</string>
+    <string name="status_epg_after">Timp după</string>
+    <string name="status_timezone">Fus orar</string>
+    <string name="status_def_after_record">Acțiune după înregistrare</string>
+    <string name="status_folder_free">Liber</string>
+    <string name="status_folder_total">Total</string>
+    <!-- Dialogs -->
+    <string name="dialog_confirmation_title">Confirmare</string>
+    <string name="firstStartMessageTitle">Nu s-a găsit nicio configurare de server</string>
+    <string name="firstStartMessage">Nu s-au găsit setări de conexiune.\n\nDoriți să mergeți la setări?</string>
+    <string name="confirmDelete">Ștergeți elementele selectate?</string>
+    <string name="noFlashPlayerFound">Nu s-a găsit niciun player video compatibil.\nInstalați un player compatibil cu Mpeg/Flash.</string>
+    <!-- Preferences -->
+    <string name="preferences">Setări</string>
+    <string name="pref_seperator_connection">Setări conexiune</string>
+    <string name="pref_seperator_channel">Listă canale</string>
+    <string name="pref_seperator_rs_con">Setări server</string>
+    <string name="pref_item_rs_conn">Conexiune server</string>
+    <string name="pref_item_rs_conn_summary">Setări de conexiune pentru server</string>
+    <string name="pref_item_rs_url">URL Recording Service</string>
+    <string name="pref_item_rs_url_summary">URL-ul serverului</string>
+    <string name="pref_item_rs_port">Port Recording Service</string>
+    <string name="pref_item_rs_port_summary">Portul serverului</string>
+    <string name="pref_item_username">Utilizator</string>
+    <string name="pref_item_username_summary">Utilizator dacă este necesar</string>
+    <string name="pref_item_password">Parolă</string>
+    <string name="pref_item_password_summary">Parolă dacă este necesară</string>
+    <string name="pref_item_rs_wol_on_start">Trimite WOL la pornire</string>
+    <string name="pref_item_rs_wol_on_start_summary">Încearcă să trezească serverul la pornire</string>
+    <string name="pref_item_channel_show_current_program">Afișează programul curent</string>
+    <string name="pref_item_channel_show_current_program_summary">Afișează programul curent în lista de canale</string>
+    <string name="pref_item_channel_show_current_program_wifi">Doar pe WIFI</string>
+    <string name="pref_item_channel_show_current_program_wifi_summary">Afișează programul curent doar dacă este conectat WIFI</string>
+    <string name="pref_item_channel_fav">Folosește Favorite</string>
+    <string name="pref_item_channel_fav_summary">Afișează favoritele în loc de canale</string>
+    <!-- Player preferences -->
+    <string name="pref_seperator_player">Player video intern</string>
+    <string name="pref_player_internal_title">Folosește player intern</string>
+    <string name="pref_player_internal_summary">Redare video în aplicație (LibVLC)</string>
+    <string name="pref_player_subtitle_size">Mărime subtitrare (sp)</string>
+    <string name="pref_player_pip_title">Picture-in-Picture automat</string>
+    <string name="pref_player_pip_summary">Activează PiP la apăsarea butonului Home</string>
+    <!-- Player UI -->
+    <string name="player_connecting">Se conectează la server…</string>
+    <string name="player_timeout">Serverul nu răspunde. Reîncearcă?</string>
+    <string name="player_retry">Reîncearcă</string>
+    <string name="player_cancel">Anulează</string>
+    <string name="player_subtitles">Subtitrări</string>
+    <string name="player_subtitles_off">Oprit</string>
+    <string name="player_pip">Picture-in-Picture</string>
+    <string name="player_play_pause">Redare / Pauză</string>
+    <string name="player_brightness">Luminozitate</string>
+    <string name="player_volume">Volum</string>
+    <string name="player_error_generic">Eroare la redare. Verificați conexiunea.</string>
+    <!-- EPG Extern (XMLTV) preferences -->
+    <string name="pref_seperator_xmltv">EPG Extern (XMLTV)</string>
+    <string name="pref_xmltv_enabled_title">Activează EPG extern</string>
+    <string name="pref_xmltv_enabled_summary">Folosește un fișier XMLTV (ex. de la ErsatzTV) ca EPG alternativ</string>
+    <string name="pref_xmltv_url_title">URL fișier XMLTV</string>
+    <string name="pref_xmltv_url_summary">URL complet al fișierului XMLTV furnizat de ErsatzTV</string>
+    <string name="pref_xmltv_url_dialog_title">Introduceți URL XMLTV</string>
+    <string name="pref_xmltv_interval_title">Interval reîmprospătare</string>
+    <string name="pref_xmltv_interval_summary">Cât de des se descarcă fișierul XMLTV</string>
+    <string name="pref_xmltv_mapping_title">Mapare nume canale</string>
+    <string name="pref_xmltv_mapping_summary">Mapează numele canalelor DVBViewer la numele XMLTV când potrivirea automată eșuează</string>
+    <!-- XmltvMappingActivity -->
+    <string name="xmltv_mapping_add_title">Adaugă mapare canal</string>
+    <string name="xmltv_mapping_dvb_hint">Nume canal DVBViewer</string>
+    <string name="xmltv_mapping_xmltv_hint">Nume XMLTV (display-name)</string>
+    <string name="xmltv_mapping_empty">Nicio mapare configurată.\nApasă + pentru a adăuga.</string>
+    <string name="xmltv_mapping_delete">Șterge maparea</string>
+    <string name="xmltv_mapping_error_dvb_empty">Numele DVBViewer nu poate fi gol</string>
+    <string name="xmltv_mapping_error_xmltv_empty">Numele XMLTV nu poate fi gol</string>
+    <!-- Error -->
+    <string name="error_common">Eroare</string>
+    <string name="error_parsing_xml">Eroare la procesarea datelor XML</string>
+    <string name="error_invalid_credentials">Autentificare eșuată</string>
+    <string name="support_this_app">Susțineți această aplicație</string>
+    <string name="version_unsupported_text">Versiunea serverului nu este suportată. Este necesară versiunea {0} sau mai nouă.</string>
+    <string name="recording_folder">Director înregistrări</string>
+    <!-- Remote -->
+    <string name="remote_control">Control</string>
+    <string name="remote_numbers">Cifre</string>
+    <string name="channel_switched">Canal schimbat</string>
+    <string name="no_remote_target">Niciun client DVBViewer disponibil</string>
+    <string name="timer_saved">Planificare salvată</string>
+    <string name="timer_deleted">Planificare ștearsă</string>
+    <string name="epg_monitoring">Monitorizare EPG</string>
+    <string name="stepBack"><![CDATA[<<<]]></string>
+    <string name="moveup">Sus</string>
+    <string name="stepForward"><![CDATA[>>>]]></string>
+    <string name="moveleft">Stânga</string>
+    <string name="moveright">Dreapta</string>
+    <string name="back">Înapoi</string>
+    <string name="videotext">Teletext</string>
+    <string name="movedown">Jos</string>
+    <string name="menu">Meniu</string>
+    <string name="videos">Videoclipuri</string>
+    <string name="red">Roșu</string>
+    <string name="green">Verde</string>
+    <string name="yellow">Galben</string>
+    <string name="blue">Albastru</string>
+    <string name="pause">||</string>
+    <string name="remote_1">1</string>
+    <string name="remote_2">2</string>
+    <string name="remote_3">3</string>
+    <string name="remote_4">4</string>
+    <string name="remote_5">5</string>
+    <string name="remote_6">6</string>
+    <string name="remote_7">7</string>
+    <string name="remote_8">8</string>
+    <string name="remote_9">9</string>
+    <string name="remote_0">0</string>
+    <string name="active">Activ</string>
+    <string name="busyDeleteTimer">Se șterge planificarea…</string>
+    <string name="stream">Stream</string>
+    <string name="aspectRatio">Format imagine</string>
+    <string name="maxHeight">Înălțime maximă</string>
+    <string name="maxWidth">Lățime maximă</string>
+    <string name="error_unknonwn_host">Host necunoscut</string>
+    <string name="error_connection_timeout">Timeout conexiune</string>
+    <string name="error_invalid_url">URL invalid</string>
+    <string name="quick_stream_hint_title">Stream canal</string>
+    <string name="quick_stream_hint_text">Pornește un stream apăsând pe logo-ul canalului</string>
+</resources>
