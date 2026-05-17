@@ -9,24 +9,20 @@ buildVersionCode = majorVersion * 10000000 + minorVersion * 100000 + patchVersio
 buildVersionName = "${majorVersion}.${minorVersion}.${patchVersion} build ${buildNumber}"
 
 buildscript {
-    ext.kotlin_version = '1.3.41'
+    ext.kotlin_version = '1.9.25'
     repositories {
         google()
-        jcenter()
-        maven { url "https://maven.google.com" }
-        maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath 'com.google.gms:google-services:4.3.0'
-        classpath 'io.fabric.tools:gradle:1.31.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.google.gms:google-services:4.4.2'
+classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 ext {
     applicationId = "org.dvbviewer.controller"
     compileSdkVersion = project.compileSdkVersion.toInteger()
-    buildToolsVersion = project.buildToolsVersion
     minSdkVersion = project.minSdkVersion.toInteger()
     targetSdkVersion = project.targetSdkVersion.toInteger()
     versionCode = buildVersionCode
@@ -36,6 +32,5 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 }

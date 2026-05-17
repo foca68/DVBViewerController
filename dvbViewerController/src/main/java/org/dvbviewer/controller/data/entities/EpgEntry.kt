@@ -64,6 +64,9 @@ class EpgEntry : Parcelable, IEPG {
 
     var pdc: String = StringUtils.EMPTY
 
+    /** Episode identifier from XMLTV <episode-num system="onscreen">, e.g. "S07E17". Empty for DVBViewer entries. */
+    var episodeNum: String = StringUtils.EMPTY
+
 
     /* (non-Javadoc)
 	 * @see android.os.Parcelable#describeContents()

@@ -47,15 +47,15 @@ internal object SSLUtil {
      * @return the SSL context
      */
     private fun getSSLContext(trustManager: X509TrustManager): SSLContext? {
-        var sslContext = getProtocolContext(TlsVersion.TLS_1_2.javaName(), trustManager)
+        var sslContext = getProtocolContext(TlsVersion.TLS_1_2.javaName, trustManager)
         if (sslContext == null) {
-            sslContext = getProtocolContext(TlsVersion.TLS_1_1.javaName(), trustManager)
+            sslContext = getProtocolContext(TlsVersion.TLS_1_1.javaName, trustManager)
         }
         if (sslContext == null) {
-            sslContext = getProtocolContext(TlsVersion.TLS_1_0.javaName(), trustManager)
+            sslContext = getProtocolContext(TlsVersion.TLS_1_0.javaName, trustManager)
         }
         if (sslContext == null) {
-            sslContext = getProtocolContext(TlsVersion.SSL_3_0.javaName(), trustManager)
+            sslContext = getProtocolContext(TlsVersion.SSL_3_0.javaName, trustManager)
         }
         if (sslContext == null) {
             sslContext = getDefaultContext(trustManager)

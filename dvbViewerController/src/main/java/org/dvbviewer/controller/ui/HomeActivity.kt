@@ -263,8 +263,8 @@ class HomeActivity : GroupDrawerActivity(), OnClickListener, OnChannelSelectedLi
         if (mClientSpinner != null) {
             val clients = LinkedList<String>()
             spinnerData?.map { it.name }?.let { clients.addAll(it) }
-            mSpinnerAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, clients.toTypedArray())
-            mSpinnerAdapter!!.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            mSpinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, clients.toTypedArray())
+            mSpinnerAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             mClientSpinner!!.adapter = mSpinnerAdapter
             val activeClient = prefs!!.getString(DVBViewerPreferences.KEY_SELECTED_CLIENT)
             val index = clients.indexOf(activeClient)

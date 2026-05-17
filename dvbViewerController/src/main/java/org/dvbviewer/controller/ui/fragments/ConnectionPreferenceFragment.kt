@@ -27,7 +27,8 @@ class ConnectionPreferenceFragment : PreferenceFragmentCompat(), OnSharedPrefere
         addPreferencesFromResource(R.xml.rs_preferences)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (sharedPreferences == null || key == null) return
         when (key) {
             DVBViewerPreferences.KEY_DMS_URL -> ServerConsts.DMS_URL = sharedPreferences.getString(key, null)
             DVBViewerPreferences.KEY_RS_PORT -> ServerConsts.REC_SERVICE_PORT = sharedPreferences.getString(key, "")
@@ -50,7 +51,7 @@ class ConnectionPreferenceFragment : PreferenceFragmentCompat(), OnSharedPrefere
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     /*
@@ -60,7 +61,7 @@ class ConnectionPreferenceFragment : PreferenceFragmentCompat(), OnSharedPrefere
      */
     override fun onPause() {
         super.onPause()
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
     }
 
 

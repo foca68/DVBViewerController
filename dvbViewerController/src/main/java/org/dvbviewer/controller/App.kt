@@ -16,7 +16,9 @@
 package org.dvbviewer.controller
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
+import org.dvbviewer.controller.data.xmltv.XmltvRefreshWorker
 import com.google.android.gms.security.ProviderInstaller
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
@@ -41,6 +43,7 @@ class App : MultiDexApplication() {
 	 */
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         val prefs = DVBViewerPreferences(this)
         Config.IS_FIRST_START = prefs.getBoolean(DVBViewerPreferences.KEY_IS_FIRST_START, true)
         Config.CHANNELS_SYNCED = prefs.getBoolean(DVBViewerPreferences.KEY_CHANNELS_SYNCED, false)
@@ -59,6 +62,9 @@ class App : MultiDexApplication() {
             val wakeOnLanThread = Thread(wakeOnLanRunnabel)
             wakeOnLanThread.start()
         }
+
+        Log.d(TAG, "App.onCreate() — scheduling XMLTV refresh worker")
+        XmltvRefreshWorker.schedule(this)
 
         installPlayServiceSecurityUpdates()
 

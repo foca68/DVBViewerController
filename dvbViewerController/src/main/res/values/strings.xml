@@ -124,6 +124,26 @@
     <string name="pref_item_channel_show_current_program_wifi_summary">Shows the current program in the channel list only if WIFI is connected</string>
     <string name="pref_item_channel_fav">Use Favourites</string>
     <string name="pref_item_channel_fav_summary">Shows the favourites instead of the channels</string>
+    <!-- EPG Extern (XMLTV) preferences -->
+    <string name="pref_seperator_xmltv">External EPG (XMLTV)</string>
+    <string name="pref_xmltv_enabled_title">Enable external EPG</string>
+    <string name="pref_xmltv_enabled_summary">Use an XMLTV file (e.g. from ErsatzTV) as EPG fallback</string>
+    <string name="pref_xmltv_url_title">XMLTV file URL</string>
+    <string name="pref_xmltv_url_summary">Full URL of the XMLTV file provided by ErsatzTV</string>
+    <string name="pref_xmltv_url_dialog_title">Enter XMLTV URL</string>
+    <string name="pref_xmltv_interval_title">Refresh interval</string>
+    <string name="pref_xmltv_interval_summary">How often the XMLTV file is downloaded</string>
+    <string name="pref_xmltv_mapping_title">Channel Name Mapping</string>
+    <string name="pref_xmltv_mapping_summary">Map DVBViewer channel names to XMLTV names when auto-matching fails</string>
+    <!-- XmltvMappingActivity -->
+    <string name="xmltv_mapping_add_title">Add Channel Mapping</string>
+    <string name="xmltv_mapping_dvb_hint">DVBViewer channel name</string>
+    <string name="xmltv_mapping_xmltv_hint">XMLTV display-name</string>
+    <string name="xmltv_mapping_empty">No mappings configured.\nTap + to add one.</string>
+    <string name="xmltv_mapping_delete">Delete mapping</string>
+    <string name="xmltv_mapping_error_dvb_empty">DVBViewer name cannot be empty</string>
+    <string name="xmltv_mapping_error_xmltv_empty">XMLTV name cannot be empty</string>
+
     <!-- Error -->
     <string name="error_common">Error</string>
     <string name="error_parsing_xml">Failed to parse the xml data</string>

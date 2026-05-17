@@ -105,8 +105,8 @@ class Remote : BaseFragment(), AbstractRemote.OnRemoteButtonClickListener {
             } else if (CollectionUtils.isNotEmpty(observable.data)) {
                 val clients = LinkedList<String>()
                 observable.data?.map { it.name }?.let { clients.addAll(it) }
-                mSpinnerAdapter = ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, clients.toTypedArray())
-                mSpinnerAdapter!!.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                mSpinnerAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, clients.toTypedArray())
+                mSpinnerAdapter!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 mClientSpinner?.adapter = mSpinnerAdapter
                 val activeClient = prefs.getString(DVBViewerPreferences.KEY_SELECTED_CLIENT)
                 val index = clients.indexOf(activeClient)

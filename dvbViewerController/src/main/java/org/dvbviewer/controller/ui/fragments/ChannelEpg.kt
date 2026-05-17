@@ -40,6 +40,7 @@ import org.dvbviewer.controller.data.entities.Timer
 import org.dvbviewer.controller.data.epg.ChannelEpgViewModel
 import org.dvbviewer.controller.data.epg.EPGRepository
 import org.dvbviewer.controller.data.epg.EpgViewModelFactory
+import org.dvbviewer.controller.data.xmltv.XmltvRepository
 import org.dvbviewer.controller.data.remote.RemoteRepository
 import org.dvbviewer.controller.data.timer.TimerRepository
 import org.dvbviewer.controller.ui.base.BaseListFragment
@@ -125,12 +126,15 @@ class ChannelEpg : BaseListFragment(), OnItemClickListener, OnClickListener, Pop
 
         setEmptyText(resources.getString(R.string.no_epg))
         val epgObserver = Observer<List<EpgEntry>> { response -> onEpgChanged(response!!) }
-        val epgViewModelFactory = EpgViewModelFactory(epgRepository)
+        val xmltvPrefs = DVBViewerPreferences(requireContext())
+        val xmltvRepo = if (xmltvPrefs.getBoolean(DVBViewerPreferences.KEY_XMLTV_ENABLED, false))
+            XmltvRepository(requireContext()) else null
+        val epgViewModelFactory = EpgViewModelFactory(epgRepository, xmltvRepo)
         epgViewModel = ViewModelProvider(this, epgViewModelFactory)
                 .get(ChannelEpgViewModel::class.java)
         val now = Date(mDateInfo!!.epgDate)
         val tommorrow = DateUtils.addDay(now)
-        epgViewModel.getChannelEPG(epgId, now, tommorrow).observe(this, epgObserver)
+        epgViewModel.getChannelEPG(epgId, channel ?: "", now, tommorrow).observe(this, epgObserver)
     }
 
     private fun onEpgChanged(response: List<EpgEntry>) {
@@ -263,7 +267,7 @@ class ChannelEpg : BaseListFragment(), OnItemClickListener, OnClickListener, Pop
         setListShown(false)
         val start = Date(mDateInfo!!.epgDate)
         val end = DateUtils.addDay(start)
-        epgViewModel.getChannelEPG(epgId, start, end, true)
+        epgViewModel.getChannelEPG(epgId, channel ?: "", start, end, true)
     }
 
     /**

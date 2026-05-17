@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.recycler_view.view.*
 import org.apache.commons.lang3.StringUtils
 import org.dvbviewer.controller.R
 import org.dvbviewer.controller.data.api.io.exception.AuthenticationException
@@ -27,9 +26,9 @@ open class RecyclerViewFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.recycler_view, container, false)
-        recyclerView = view.recyclerView
-        progressBar = view.progressBar
-        infoText = view.infoText
+        recyclerView = view.findViewById(R.id.recyclerView)
+        progressBar = view.findViewById(R.id.progressBar)
+        infoText = view.findViewById(R.id.infoText)
         recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         recyclerView.setHasFixedSize(true)
         val llm = LinearLayoutManager(context)
@@ -72,14 +71,6 @@ open class RecyclerViewFragment : BaseFragment() {
         }
     }
 
-    /**
-     * Generic method to catch an Exception.
-     * It shows a toast to inform the user.
-     * This method is safe to be called from non UI threads.
-     *
-     * @param tag for logging
-     * @param e   the Excetpion to catch
-     */
     override fun catchException(tag: String, e: Throwable?) {
         if (context == null) {
             return

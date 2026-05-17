@@ -12,14 +12,9 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_item_video.view.*
 import org.dvbviewer.controller.R
 import org.dvbviewer.controller.data.media.MediaFile
 import org.dvbviewer.controller.utils.ServerConsts
-
-/**
- * Created by rayba on 21.04.17.
- */
 
 open class MediaAdapter(context: Context, private val listener: OnMediaClickListener) : RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
 
@@ -28,7 +23,6 @@ open class MediaAdapter(context: Context, private val listener: OnMediaClickList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_item_video, parent, false)
-
         return MediaViewHolder(itemView)
     }
 
@@ -80,17 +74,17 @@ open class MediaAdapter(context: Context, private val listener: OnMediaClickList
 
     class MediaViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-        var name: TextView? = v.name
+        var name: TextView? = v.findViewById(R.id.name)
 
-        var icon: AppCompatImageView? = v.icon
+        var icon: AppCompatImageView? = v.findViewById(R.id.icon)
 
-        var thumbNailContainer: View? = v.thumbNailContainer
+        var thumbNailContainer: View? = v.findViewById(R.id.thumbNailContainer)
 
-        var thumbNail: ImageView? = v.thumbNail
+        var thumbNail: ImageView? = v.findViewById(R.id.thumbNail)
 
-        var contextMenu: AppCompatImageButton? = v.contextMenu
+        var contextMenu: AppCompatImageButton? = v.findViewById(R.id.contextMenu)
 
-        var widgetFrame: View? = v.widget_frame
+        var widgetFrame: View? = v.findViewById(R.id.widget_frame)
 
     }
 

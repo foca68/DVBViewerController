@@ -36,7 +36,7 @@ class StreamViewModel internal constructor(application: Application, private val
             var apiResponse: ApiResponse<FFMpegPresetList> = ApiResponse.error(null, null)
             async(Dispatchers.Default) {
                 apiResponse = try {
-                    val prefs = mRepository.getFFMpegPresets(getApplication())
+                    val prefs = mRepository.getFFMpegPresets(application)
                     ApiResponse.success(prefs)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error getting mediafiles", e)

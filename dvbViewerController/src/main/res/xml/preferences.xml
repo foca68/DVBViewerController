@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_seperator_connection" >
+    <PreferenceCategory android:title="@string/pref_seperator_connection">
         <Preference
             android:key="KEY_RS_SETTINGS"
             android:summary="@string/pref_item_rs_conn_summary"
-            android:title="@string/pref_item_rs_conn">
-        </Preference>
+            android:title="@string/pref_item_rs_conn" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_seperator_channel" >
+
+    <PreferenceCategory android:title="@string/pref_seperator_channel">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="KEY_CHANNELS_SHOW_NOW_PLAYING"
@@ -26,4 +26,38 @@
             android:summary="@string/pref_item_channel_fav_summary"
             android:title="@string/pref_item_channel_fav" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_seperator_xmltv">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="KEY_XMLTV_ENABLED"
+            android:summary="@string/pref_xmltv_enabled_summary"
+            android:title="@string/pref_xmltv_enabled_title" />
+
+        <EditTextPreference
+            android:dependency="KEY_XMLTV_ENABLED"
+            android:dialogTitle="@string/pref_xmltv_url_dialog_title"
+            android:inputType="textUri"
+            android:key="KEY_XMLTV_URL"
+            android:summary="@string/pref_xmltv_url_summary"
+            android:title="@string/pref_xmltv_url_title" />
+
+        <ListPreference
+            android:defaultValue="6"
+            android:dependency="KEY_XMLTV_ENABLED"
+            android:entries="@array/pref_xmltv_interval_entries"
+            android:entryValues="@array/pref_xmltv_interval_values"
+            android:key="KEY_XMLTV_REFRESH_INTERVAL"
+            android:summary="@string/pref_xmltv_interval_summary"
+            android:title="@string/pref_xmltv_interval_title" />
+
+        <Preference
+            android:dependency="KEY_XMLTV_ENABLED"
+            android:key="KEY_XMLTV_CHANNEL_MAPPING"
+            android:summary="@string/pref_xmltv_mapping_summary"
+            android:title="@string/pref_xmltv_mapping_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

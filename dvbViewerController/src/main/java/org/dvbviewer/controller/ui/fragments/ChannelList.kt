@@ -39,11 +39,15 @@ import androidx.loader.content.Loader
 import com.squareup.picasso.Picasso
 import okhttp3.ResponseBody
 import org.dvbviewer.controller.R
+import android.util.Log
+import org.dvbviewer.controller.data.DbHelper
 import org.dvbviewer.controller.data.ProviderConsts
 import org.dvbviewer.controller.data.ProviderConsts.ChannelTbl
 import org.dvbviewer.controller.data.ProviderConsts.EpgTbl
 import org.dvbviewer.controller.data.entities.Channel
 import org.dvbviewer.controller.data.entities.DVBViewerPreferences
+import org.dvbviewer.controller.data.entities.EpgEntry
+import org.dvbviewer.controller.data.xmltv.XmltvChannelMapper
 import org.dvbviewer.controller.data.entities.Timer
 import org.dvbviewer.controller.data.remote.RemoteRepository
 import org.dvbviewer.controller.data.timer.TimerRepository
@@ -176,6 +180,73 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
         if (activity != null) {
             activity!!.invalidateOptionsMenu()
         }
+        // After DVBViewer now-EPG is loaded, fill in gaps from XMLTV cache.
+        if (prefs.getBoolean(DVBViewerPreferences.KEY_XMLTV_ENABLED, false)) {
+            val needsXmltv = collectChannelsWithoutEpg(cursor)
+            if (needsXmltv.isNotEmpty()) loadXmltvNowCache(needsXmltv)
+        }
+    }
+
+    /**
+     * Collects DVBViewer channel names whose EPG title is empty in the "now" cursor.
+     * Called on the main thread while cursor is fresh — safe to iterate here.
+     */
+    private fun collectChannelsWithoutEpg(cursor: Cursor): List<String> {
+        val names = mutableListOf<String>()
+        val savedPos = cursor.position
+        if (cursor.moveToFirst()) {
+            val nameIdx  = cursor.getColumnIndex(ChannelTbl.NAME)
+            val titleIdx = cursor.getColumnIndex(EpgTbl.TITLE)
+            do {
+                val title = if (titleIdx >= 0) cursor.getString(titleIdx) else null
+                if (TextUtils.isEmpty(title)) names.add(cursor.getString(nameIdx))
+            } while (cursor.moveToNext())
+        }
+        cursor.moveToPosition(savedPos)
+        return names
+    }
+
+    /**
+     * Builds the XMLTV "now-playing" cache for [channelNames] in a background
+     * thread and posts the result back to the adapter on the main thread.
+     *
+     * Strategy:
+     *  1. Query xmltv_epg for programmes on air right now (single bulk query).
+     *  2. For each DVBViewer channel name, use XmltvChannelMapper to find the
+     *     best matching XMLTV channel (manual → exact → fuzzy ≥ 80%).
+     *  3. Hand the Map<dvbName, EpgEntry> to the adapter.
+     */
+    private fun loadXmltvNowCache(channelNames: List<String>) {
+        val ctx = context?.applicationContext ?: return
+        Thread {
+            val dbHelper    = DbHelper(ctx)
+            val xmltvNow    = dbHelper.getXmltvNowPlaying(System.currentTimeMillis())
+            if (xmltvNow.isEmpty()) return@Thread
+
+            val mapper      = XmltvChannelMapper(ctx)
+            val xmltvNames  = xmltvNow.keys.toList()
+            val cache       = mutableMapOf<String, EpgEntry>()
+
+            for (dvbName in channelNames) {
+                val resolved = mapper.resolve(dvbName, xmltvNames) ?: continue
+                xmltvNow[resolved.xmltvName]?.let { cache[dvbName] = it }
+            }
+
+            // ── Diagnostic: dump cache to verify title ≠ channel name ──
+        Log.d(TAG_XMLTV, "XMLTV now-cache built: ${cache.size} entries")
+        cache.entries.take(10).forEach { (dvb, entry) ->
+            Log.d(TAG_XMLTV, "  dvb=\"$dvb\"  entry.channel=\"${entry.channel}\"" +
+                    "  entry.title=\"${entry.title}\"" +
+                    "  title==channel:${entry.title == entry.channel}")
+        }
+
+        if (cache.isNotEmpty()) {
+                activity?.runOnUiThread {
+                    mAdapter.setXmltvNowCache(cache)
+                    mAdapter.notifyDataSetChanged()
+                }
+            }
+        }.start()
     }
 
     /*
@@ -352,55 +423,56 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
      *
      * @author RayBa
      */
-    inner class ChannelAdapter
-    /**
-     * Instantiates a new channel adapter.
-     *
-     * @param context the context
-     */
-    (context: Context?) : CursorAdapter(context, null, FLAG_REGISTER_CONTENT_OBSERVER) {
+    inner class ChannelAdapter(context: Context?) :
+            CursorAdapter(context, null, FLAG_REGISTER_CONTENT_OBSERVER) {
 
+        /** XMLTV now-playing cache: DVBViewer channel name → current EpgEntry. */
+        private var xmltvNowCache: Map<String, EpgEntry> = emptyMap()
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * android.support.v4.widget.CursorAdapter#bindView(android.view.View,
-         * android.content.Context, android.database.Cursor)
-         */
+        fun setXmltvNowCache(cache: Map<String, EpgEntry>) {
+            xmltvNowCache = cache
+        }
+
         override fun bindView(view: View, context: Context, c: Cursor) {
-            val holder = view.tag as ViewHolder
-            holder.contextMenu!!.tag = AdapterView.INVALID_POSITION
+            val holder      = view.tag as ViewHolder
+            val channelName = c.getString(c.getColumnIndex(ChannelTbl.NAME))
+            val logoUrl     = c.getString(c.getColumnIndex(ChannelTbl.LOGO_URL))
+            val epgTitle    = c.getString(c.getColumnIndex(EpgTbl.TITLE))
+            val epgStart    = c.getLong(c.getColumnIndex(EpgTbl.START))
+            val epgEnd      = c.getLong(c.getColumnIndex(EpgTbl.END))
+            val position    = c.getInt(c.getColumnIndex(ChannelTbl.POSITION))
+
+            holder.contextMenu!!.tag   = AdapterView.INVALID_POSITION
             holder.iconContainer!!.tag = AdapterView.INVALID_POSITION
             holder.icon!!.setImageBitmap(null)
-            val channelName = c.getString(c.getColumnIndex(ChannelTbl.NAME))
-            val logoUrl = c.getString(c.getColumnIndex(ChannelTbl.LOGO_URL))
-            val epgTitle = c.getString(c.getColumnIndex(EpgTbl.TITLE))
-            val epgStart = c.getLong(c.getColumnIndex(EpgTbl.START))
-            val epgEnd = c.getLong(c.getColumnIndex(EpgTbl.END))
-            val position = c.getInt(c.getColumnIndex(ChannelTbl.POSITION))
-            holder.channelName!!.text = channelName
-            if (TextUtils.isEmpty(epgTitle)) {
-                holder.epgTime!!.visibility = View.GONE
-                holder.epgTitle!!.visibility = View.GONE
-                holder.progress!!.visibility = View.GONE
-            } else {
-                holder.epgTitle!!.visibility = View.VISIBLE
-                holder.epgTime!!.visibility = View.VISIBLE
-                holder.progress!!.visibility = View.VISIBLE
-                val start = DateUtils.formatDateTime(context, epgStart, DateUtils.FORMAT_SHOW_TIME)
-                val end = DateUtils.formatDateTime(context, epgEnd, DateUtils.FORMAT_SHOW_TIME)
-                val timeAll = (epgEnd - epgStart).toFloat()
-                val timeNow = (Date().time - epgStart).toFloat()
-                val progress = timeNow / timeAll
-                holder.progress!!.progress = (progress * 100).toInt()
-                holder.epgTime!!.text = "$start - $end"
-                holder.epgTitle!!.text = epgTitle
+            holder.channelName!!.text  = channelName
+            holder.position!!.text     = position.toString()
+
+            when {
+                // Primary: DVBViewer "now" table has EPG data
+                !TextUtils.isEmpty(epgTitle) ->
+                    bindEpg(holder, context, epgTitle, epgStart, epgEnd)
+
+                // Fallback: XMLTV cache. The cache already excludes entries that have
+                // nothing useful (blank title AND blank subTitle AND blank episodeNum).
+                xmltvNowCache.containsKey(channelName) -> {
+                    val x = xmltvNowCache[channelName]!!
+                    val displayTitle = xmltvDisplayTitle(x)
+                    if (displayTitle != null) {
+                        Log.d(TAG_XMLTV, "XMLTV epg: \"$channelName\" → \"$displayTitle\"")
+                        bindEpg(holder, context, displayTitle, x.start.time, x.end.time)
+                    } else {
+                        hideEpg(holder)
+                    }
+                }
+
+                // No EPG from either source
+                else -> hideEpg(holder)
             }
-            holder.position!!.text = position.toString()
-            holder.contextMenu!!.tag = c.position
+
+            holder.contextMenu!!.tag   = c.position
             holder.iconContainer!!.tag = c.position
-            holder.v!!.isChecked = listView!!.isItemChecked(c.position)
+            holder.v!!.isChecked       = listView!!.isItemChecked(c.position)
 
             if (!TextUtils.isEmpty(logoUrl)) {
                 Picasso.get()
@@ -408,9 +480,27 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
                         .fit()
                         .centerInside()
                         .into(holder.icon)
-            } else {
-                holder.icon!!.setImageBitmap(null)
             }
+        }
+
+        private fun bindEpg(holder: ViewHolder, context: Context,
+                            title: String, startMs: Long, endMs: Long) {
+            holder.epgTitle!!.visibility = View.VISIBLE
+            holder.epgTime!!.visibility  = View.VISIBLE
+            holder.progress!!.visibility = View.VISIBLE
+            val startFmt = DateUtils.formatDateTime(context, startMs, DateUtils.FORMAT_SHOW_TIME)
+            val endFmt   = DateUtils.formatDateTime(context, endMs,   DateUtils.FORMAT_SHOW_TIME)
+            val elapsed  = (Date().time - startMs).toFloat()
+            val total    = (endMs - startMs).toFloat()
+            holder.progress!!.progress = if (total > 0) ((elapsed / total) * 100).toInt().coerceIn(0, 100) else 0
+            holder.epgTime!!.text  = "$startFmt - $endFmt"
+            holder.epgTitle!!.text = title
+        }
+
+        private fun hideEpg(holder: ViewHolder) {
+            holder.epgTime!!.visibility  = View.GONE
+            holder.epgTitle!!.visibility = View.GONE
+            holder.progress!!.visibility = View.GONE
         }
 
         /*
@@ -624,6 +714,32 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
         val BASE_CONTENT_URI = Uri.parse(ProviderConsts.BASE_CONTENT_URI.toString() + "/channelselector")
         val KEY_CHANNEL_INDEX = ChannelList::class.java.name + "KEY_CHANNEL_INDEX"
         private val LOADER_CHANNELLIST = 101
+        private const val TAG_XMLTV = "ChannelList.XMLTV"
+
+        /**
+         * Computes the string to display in the "now playing" row for a XMLTV entry.
+         *
+         * Priority:
+         *  1. Real title (not a channel-name placeholder)        → title
+         *  2. Placeholder title, episodeNum + subTitle both set  → "S07E17 - I Found Your Moustache"
+         *  3. Placeholder title, only episodeNum                 → "S07E17"
+         *  4. Placeholder title, only subTitle                   → "I Found Your Moustache"
+         *  5. Nothing useful                                      → null (hide EPG row)
+         */
+        fun xmltvDisplayTitle(entry: EpgEntry): String? {
+            val titleIsPlaceholder = entry.title.isBlank() ||
+                    entry.title.equals(entry.channel, ignoreCase = true)
+            if (!titleIsPlaceholder) return entry.title
+
+            val ep  = entry.episodeNum.trim()
+            val sub = entry.subTitle.trim()
+            return when {
+                ep.isNotEmpty() && sub.isNotEmpty() -> "$ep - $sub"
+                ep.isNotEmpty()                     -> ep
+                sub.isNotEmpty()                    -> sub
+                else                                -> null
+            }
+        }
 
         /**
          * Reads the current cursorposition to a Channel.

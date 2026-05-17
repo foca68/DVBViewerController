@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Drawable semantic colors -->
+    <color name="colorDrawerBackground">@color/md_theme_dark_surface</color>
+    <color name="colorDivider">@color/md_theme_dark_outlineVariant</color>
+    <color name="colorProgressTrack">@color/md_theme_dark_surfaceVariant</color>
+    <color name="colorProgressFill">@color/md_theme_dark_primary</color>
+
+    <!-- Backward-compat aliases — dark mode overrides -->
+    <color name="colorPrimary">@color/md_theme_dark_primary</color>
+    <color name="colorAccent">@color/md_theme_dark_secondary</color>
+</resources>

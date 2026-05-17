@@ -1,69 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2012 dvbviewer-controller Project
+<resources>
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ===================================================================
+         M3 Shape Appearances
+         =================================================================== -->
 
-    <style name="ActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
-        <item name="android:background">@color/recording</item>
-        <item name="actionModeBackground">@color/recording</item>
+    <!-- 24dp — pill shape for primary / secondary / text buttons -->
+    <style name="ShapeAppearance.App.Button.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- 12dp — rounded rectangle for icon-only buttons in list rows -->
+    <style name="ShapeAppearance.App.Button.Icon" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <!-- ===================================================================
+         M3 Button Styles
+         =================================================================== -->
+
+    <!-- Primary filled button — 24dp pill (applied globally via materialButtonStyle) -->
+    <style name="Widget.App.Button.Primary" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Button.Pill</item>
+    </style>
+
+    <!-- Text button — 24dp pill (used for buttonBarButtonStyle: timer OK/Cancel) -->
+    <style name="Widget.App.Button.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Button.Pill</item>
+    </style>
+
+    <!-- ===================================================================
+         Action mode
+         =================================================================== -->
+
+    <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="android:background">@color/colorRecording</item>
+        <item name="actionModeBackground">@color/colorRecording</item>
     </style>
 
     <style name="DashboardButton">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
-    <style name="commonTitle" parent="@android:style/TextAppearance">
+    <style name="commonTitle" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:maxLines">2</item>
     </style>
 
-    <style name="caption" parent="@android:style/TextAppearance">
+    <style name="caption" parent="TextAppearance.Material3.BodySmall">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">5dp</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="centeredText" parent="@android:style/TextAppearance">
+    <style name="centeredText" parent="TextAppearance.Material3.BodySmall">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">@dimen/text_size_sm</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="commonSubTitle" parent="@android:style/TextAppearance">
+    <style name="commonSubTitle" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="categoryTitle" parent="@android:style/TextAppearance">
+    <style name="categoryTitle" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/secondary_text_dark</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
@@ -74,8 +93,8 @@
         <item name="android:paddingLeft">@dimen/default_padding_small</item>
         <item name="android:background">@drawable/divider</item>
     </style>
-    
-     <style name="HorizontalDivider">
+
+    <style name="HorizontalDivider">
         <item name="android:layout_width">2dp</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:paddingRight">@dimen/default_padding_small</item>
@@ -88,25 +107,16 @@
     </style>
 
     <style name="HeaderContainer">
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">?attr/colorPrimaryContainer</item>
     </style>
 
-    <style name="DialogStyle" parent="Theme.AppCompat.DialogWhenLarge">
-        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
-    </style>
-
-    <style name="DialogWindowTitle" parent="Theme.DVB.NoActionBar">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
-    </style>
-
-    <style name="ProgressBarStyleHorizontal" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="ProgressBarStyleHorizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
     </style>
 
-    <style name="ImageButtonStyle" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+    <style name="ImageButtonStyle" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Button.Pill</item>
     </style>
 
 </resources>

@@ -17,7 +17,7 @@ class DMSInterceptor : Interceptor {
             throw NoHostException()
         }
         val request = chain.request()
-        val requestUrl = request.url()
+        val requestUrl = request.url
         val modifiedUrl = URLUtil.replaceUrl(requestUrl)!!
                 .build() ?: throw InvalidHostException(REC_SERVICE_HOST)
         val credentials = Credentials.basic(REC_SERVICE_USER_NAME, REC_SERVICE_PASSWORD)
@@ -32,10 +32,10 @@ class DMSInterceptor : Interceptor {
         val response = chain.proceed(modifiedRequest)
         if (!response.isSuccessful) {
             val e: IOException
-            when (response.code()) {
+            when (response.code) {
                 401 -> e = AuthenticationException()
                 423 -> e = FileLockedException()
-                else -> e = UnsuccessfulHttpException(response.code())
+                else -> e = UnsuccessfulHttpException(response.code)
             }
             throw DefaultHttpException(modifiedUrl.toString(), e)
         }

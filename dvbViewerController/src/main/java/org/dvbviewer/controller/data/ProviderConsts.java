@@ -225,6 +225,21 @@ public class ProviderConsts {
 
 	}
 
+	/**
+	 * Table for XMLTV external EPG data.
+	 */
+	public static class XmltvTbl implements BaseColumns {
+
+		public static final String TABLE_NAME    = "xmltv_epg";
+		public static final String CHANNEL_NAME  = "channel_name";
+		public static final String START         = EpgTbl.START;
+		public static final String END           = EpgTbl.END;
+		public static final String TITLE         = EpgTbl.TITLE;
+		public static final String SUBTITLE      = EpgTbl.SUBTITLE;
+		public static final String DESC          = EpgTbl.DESC;
+		public static final String EPISODE_NUM   = "episode_num";
+	}
+
 	public static class MediaTbl implements BaseColumns {
 
 		/** The table name. */

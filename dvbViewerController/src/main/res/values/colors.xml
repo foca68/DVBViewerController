@@ -1,36 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2012 dvbviewer-controller Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 <resources>
 
-    <!-- see  http://developer.android.com/design/style/color.html-->
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1976D2</color>
-    <color name="colorAccent">#64B5F6</color>
-    <color name="colorControlNormal">#E3F2FD</color>
-    <color name="colorControlActivated">#F4511E</color>
-    <color name="colorControlDash">#E3F2FD</color>
-    <color name="primaryTextColor">#F3F3F3</color>
-    <color name="secondaryTextColor">#BEBEBE</color>
+    <!-- =====================================================================
+         Material Design 3 color scheme — seed color: #2196F3 (Material Blue)
+         Generated from: https://m3.material.io/theme-builder
+         ===================================================================== -->
 
-    <color name="error">#CC0000</color>
-    <color name="recording">#CC0000</color>
-    <color name="disabled">#80BEBEBE</color>
+    <!-- Light theme palette -->
+    <color name="md_theme_light_primary">#1B5EAE</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#D3E4FF</color>
+    <color name="md_theme_light_onPrimaryContainer">#001C3B</color>
+    <color name="md_theme_light_secondary">#535F70</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#D7E3F7</color>
+    <color name="md_theme_light_onSecondaryContainer">#0F1C2B</color>
+    <color name="md_theme_light_tertiary">#6A5778</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#F1DAFF</color>
+    <color name="md_theme_light_onTertiaryContainer">#241431</color>
+    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_errorContainer">#FFDAD6</color>
+    <color name="md_theme_light_onErrorContainer">#410002</color>
+    <color name="md_theme_light_background">#F8F9FF</color>
+    <color name="md_theme_light_onBackground">#191C20</color>
+    <color name="md_theme_light_surface">#F8F9FF</color>
+    <color name="md_theme_light_onSurface">#191C20</color>
+    <color name="md_theme_light_surfaceVariant">#DFE2EE</color>
+    <color name="md_theme_light_onSurfaceVariant">#43474F</color>
+    <color name="md_theme_light_outline">#73787F</color>
+    <color name="md_theme_light_outlineVariant">#C3C6CF</color>
+    <color name="md_theme_light_inverseSurface">#2E3135</color>
+    <color name="md_theme_light_inverseOnSurface">#EFF0F4</color>
+    <color name="md_theme_light_inversePrimary">#A4C8FF</color>
+    <color name="md_theme_light_surfaceTint">#1B5EAE</color>
+    <color name="md_theme_light_scrim">#000000</color>
 
+    <!-- Dark theme palette -->
+    <color name="md_theme_dark_primary">#A4C8FF</color>
+    <color name="md_theme_dark_onPrimary">#003063</color>
+    <color name="md_theme_dark_primaryContainer">#00468C</color>
+    <color name="md_theme_dark_onPrimaryContainer">#D3E4FF</color>
+    <color name="md_theme_dark_secondary">#BCCADD</color>
+    <color name="md_theme_dark_onSecondary">#26323F</color>
+    <color name="md_theme_dark_secondaryContainer">#3C4857</color>
+    <color name="md_theme_dark_onSecondaryContainer">#D7E3F7</color>
+    <color name="md_theme_dark_tertiary">#D7BDE7</color>
+    <color name="md_theme_dark_onTertiary">#3B2748</color>
+    <color name="md_theme_dark_tertiaryContainer">#523E60</color>
+    <color name="md_theme_dark_onTertiaryContainer">#F1DAFF</color>
+    <color name="md_theme_dark_error">#FFB4AB</color>
+    <color name="md_theme_dark_onError">#690005</color>
+    <color name="md_theme_dark_errorContainer">#93000A</color>
+    <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
+    <color name="md_theme_dark_background">#191C20</color>
+    <color name="md_theme_dark_onBackground">#E1E2E8</color>
+    <color name="md_theme_dark_surface">#191C20</color>
+    <color name="md_theme_dark_onSurface">#E1E2E8</color>
+    <color name="md_theme_dark_surfaceVariant">#43474F</color>
+    <color name="md_theme_dark_onSurfaceVariant">#C3C6CF</color>
+    <color name="md_theme_dark_outline">#8D9199</color>
+    <color name="md_theme_dark_outlineVariant">#43474F</color>
+    <color name="md_theme_dark_inverseSurface">#E1E2E8</color>
+    <color name="md_theme_dark_inverseOnSurface">#2E3135</color>
+    <color name="md_theme_dark_inversePrimary">#1B5EAE</color>
+    <color name="md_theme_dark_surfaceTint">#A4C8FF</color>
+    <color name="md_theme_dark_scrim">#000000</color>
+
+    <!-- =====================================================================
+         Semantic colors — used by drawables (cannot use ?attr/ in drawables
+         below API 29). Overridden in values-night/colors.xml for dark mode.
+         ===================================================================== -->
+    <color name="colorDrawerBackground">@color/md_theme_light_surface</color>
+    <color name="colorDivider">@color/md_theme_light_outlineVariant</color>
+    <color name="colorProgressTrack">@color/md_theme_light_surfaceVariant</color>
+    <color name="colorProgressFill">@color/md_theme_light_primary</color>
+
+    <!-- =====================================================================
+         Functional colors (mode-independent)
+         ===================================================================== -->
+    <color name="colorRecording">#CC0000</color>
+    <color name="colorDisabled">#29000000</color>
     <color name="white_transparent">#50FFFFFF</color>
     <color name="black_transparent">#AA000000</color>
+
+    <!-- =====================================================================
+         Backward-compat aliases — referenced by existing drawable / layout XML.
+         These change with the night qualifier (see values-night/colors.xml).
+         ===================================================================== -->
+    <!-- Icon fill on colored toolbar/dashboard surface — always light -->
+    <color name="colorControlNormal">#E3F2FD</color>
+    <color name="colorControlDash">#E3F2FD</color>
+
+    <!-- Alias: used by selectable_background.xml, bottom_toolbar.xml, etc. -->
+    <color name="colorPrimary">@color/md_theme_light_primary</color>
+    <color name="colorAccent">@color/md_theme_light_secondary</color>
+
+    <!-- Alias: old names kept for drawable references -->
+    <color name="disabled">#80BEBEBE</color>
+    <color name="error">@color/colorRecording</color>
+    <color name="recording">@color/colorRecording</color>
 
 </resources>

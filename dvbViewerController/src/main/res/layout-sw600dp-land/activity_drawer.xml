@@ -40,9 +40,9 @@
             android:layout_gravity="start"
             android:background="@drawable/background_grey"
             android:choiceMode="singleChoice"
-            android:divider="@color/white_transparent"
+            android:divider="@color/colorDivider"
             android:dividerHeight="1dp"
-            android:textColor="@color/black_transparent" />
+            android:textColor="?attr/colorOnSurface" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

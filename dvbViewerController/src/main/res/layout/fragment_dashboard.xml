@@ -17,6 +17,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -51,6 +54,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -85,6 +91,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -119,6 +128,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -153,6 +165,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -187,6 +202,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -221,6 +239,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -255,6 +276,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:minHeight="?android:attr/listPreferredItemHeight"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">

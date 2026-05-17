@@ -60,6 +60,15 @@ public class DVBViewerPreferences {
     public static final int DEFAULT_TIMER_TIME_AFTER = 10;
 
     /**
+     * XMLTV / External EPG Keys
+     */
+    public static final String KEY_XMLTV_ENABLED = "KEY_XMLTV_ENABLED";
+    public static final String KEY_XMLTV_URL = "KEY_XMLTV_URL";
+    public static final String KEY_XMLTV_REFRESH_INTERVAL = "KEY_XMLTV_REFRESH_INTERVAL";
+    public static final String DEFAULT_XMLTV_REFRESH_INTERVAL = "6";
+    public static final String KEY_XMLTV_CHANNEL_MAPPING = "KEY_XMLTV_CHANNEL_MAPPING";
+
+    /**
      * Streaming Preferences Keys
      */
     public static final String KEY_STREAM_DIRECT = "KEY_STREAM_DIRECT";

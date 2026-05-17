@@ -65,7 +65,7 @@ class TaskViewModel(application: Application) : DmsViewModel(application) {
             }
 
             if (!isSupported) {
-                val res = getApplication<Application>().resources
+                val res = application.resources
                 data?.value = ApiResponse.notSupported(MessageFormat.format(res.getString(R.string.version_unsupported_text), MIN_VERSION))
                 return@launch
             }

@@ -166,7 +166,7 @@ open class BaseListFragment : BaseFragment() {
             pframe.gravity = Gravity.CENTER
 
             val progress = ProgressBar(context)
-            getContext()?.let { ContextCompat.getColor(it, R.color.colorControlActivated) }?.let {
+            getContext()?.let { ContextCompat.getColor(it, R.color.colorProgressFill) }?.let {
                 progress.indeterminateDrawable
                         .setColorFilter(it, PorterDuff.Mode.SRC_IN)
             }

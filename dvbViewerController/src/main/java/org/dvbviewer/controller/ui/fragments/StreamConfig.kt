@@ -1,12 +1,12 @@
 /*
  * Copyright © 2013 dvbviewer-controller Project
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -34,7 +34,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_stream_config.*
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
 import org.dvbviewer.controller.R
@@ -47,6 +46,7 @@ import org.dvbviewer.controller.data.entities.Preset
 import org.dvbviewer.controller.data.stream.StreamRepository
 import org.dvbviewer.controller.data.stream.StreamViewModel
 import org.dvbviewer.controller.data.stream.StreamViewModelFactory
+import org.dvbviewer.controller.databinding.FragmentStreamConfigBinding
 import org.dvbviewer.controller.ui.base.BaseDialogFragment
 import org.dvbviewer.controller.utils.*
 import java.util.*
@@ -55,6 +55,9 @@ import java.util.*
  * DialogFragment to show the stream settings.
  */
 class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnClickListener, OnItemSelectedListener {
+
+    private var _binding: FragmentStreamConfigBinding? = null
+    private val binding get() = _binding!!
 
     private var preTime: String? = null
     private var title = 0
@@ -66,10 +69,6 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
     private lateinit var prefs: SharedPreferences
     private lateinit var dmsInterface: DMSInterface
 
-
-    /* (non-Javadoc)
-     * @see android.support.v4.app.DialogFragment#onCreate(android.os.Bundle)
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dvbvPrefs = DVBViewerPreferences(context!!)
@@ -89,61 +88,53 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
         dmsInterface = APIClient.client.create(DMSInterface::class.java)
     }
 
-
-    /* (non-Javadoc)
-     * @see android.support.v4.app.DialogFragment#onCreateDialog(android.os.Bundle)
-     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dia = super.onCreateDialog(savedInstanceState)
         dia.setTitle(R.string.streamConfig)
         return dia
     }
 
-    /* (non-Javadoc)
-     * @see android.support.v4.app.Fragment#onViewCreated(android.view.View, android.os.Bundle)
-     */
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentStreamConfigBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        qualitySpinner.requestFocus()
-        startHours.clearFocus()
-        collapsable.visibility = View.GONE
-        qualitySpinner.onItemSelectedListener = this
+        binding.qualitySpinner.requestFocus()
+        binding.startHours.clearFocus()
+        binding.collapsable.visibility = View.GONE
+        binding.qualitySpinner.onItemSelectedListener = this
         val encodingSpeed = StreamUtils.getEncodingSpeedIndex(context!!, prefs)
-        encodingSpeedSpinner.setSelection(encodingSpeed)
-        encodingSpeedSpinner.onItemSelectedListener = this
-        audioSpinner.onItemSelectedListener = this
+        binding.encodingSpeedSpinner.setSelection(encodingSpeed)
+        binding.encodingSpeedSpinner.onItemSelectedListener = this
+        binding.audioSpinner.onItemSelectedListener = this
         val audioTracks = LinkedList<String>()
         audioTracks.add(resources.getString(R.string.def))
         audioTracks.add(resources.getString(R.string.common_all))
         audioTracks.addAll(Arrays.asList(*resources.getStringArray(R.array.tracks)))
-        val audioAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, audioTracks.toTypedArray()) //selected item will look like a spinner set from XML
+        val audioAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, audioTracks.toTypedArray())
         audioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        audioSpinner.adapter = audioAdapter
-        subTitleSpinner.onItemSelectedListener = this
+        binding.audioSpinner.adapter = audioAdapter
+        binding.subTitleSpinner.onItemSelectedListener = this
         val subTitleTracks = LinkedList<String>()
         subTitleTracks.add(resources.getString(R.string.none))
         subTitleTracks.add(resources.getString(R.string.common_all))
         subTitleTracks.addAll(Arrays.asList(*resources.getStringArray(R.array.tracks)))
-        val subAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, subTitleTracks.toTypedArray()) //selected item will look like a spinner set from XML
+        val subAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, subTitleTracks.toTypedArray())
         subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        subTitleSpinner.adapter = subAdapter
-        startDirectButton.setOnClickListener(this)
-        startTranscodedButton.setOnClickListener(this)
-        /**
-         * Hide Position Row if streaming non seekable content
-         */
+        binding.subTitleSpinner.adapter = subAdapter
+        binding.startDirectButton.setOnClickListener(this)
+        binding.startTranscodedButton.setOnClickListener(this)
         if (!seekable) {
-            streamPositionContainer.visibility = View.GONE
+            binding.streamPositionContainer.visibility = View.GONE
         }
         if (!TextUtils.isEmpty(preTime)) {
-            startMinutes.setText(preTime)
+            binding.startMinutes.setText(preTime)
         }
-        qualitySpinner.requestFocus()
+        binding.qualitySpinner.requestFocus()
     }
 
-    /* (non-Javadoc)
-     * @see android.support.v4.app.DialogFragment#onActivityCreated(android.os.Bundle)
-     */
     override fun onActivityCreated(arg0: Bundle?) {
         super.onActivityCreated(arg0)
         val streamRepository = StreamRepository(dmsInterface)
@@ -156,37 +147,29 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
                 val dataAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, presets.presets)
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 val pos = presets.presets.indexOf(StreamUtils.getDefaultPreset(prefs))
-                startHours.clearFocus()
-                qualitySpinner.adapter = dataAdapter
-                qualitySpinner.setSelection(pos)
-                val vg = collapsable.parent as ViewGroup
+                binding.startHours.clearFocus()
+                binding.qualitySpinner.adapter = dataAdapter
+                binding.qualitySpinner.setSelection(pos)
+                val vg = binding.collapsable.parent as ViewGroup
                 val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(vg.width, View.MeasureSpec.AT_MOST)
                 val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(1073741823, View.MeasureSpec.AT_MOST)
-                collapsable.measure(widthMeasureSpec, heightMeasureSpec)
-                collapsable.visibility = View.VISIBLE
+                binding.collapsable.measure(widthMeasureSpec, heightMeasureSpec)
+                binding.collapsable.visibility = View.VISIBLE
             }
         }
         streamViewModel.getFFMpegPresets().observe(this@StreamConfig, configObserver)
     }
 
-    /* (non-Javadoc)
-     * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-     */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_stream_config, container, false)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
-    /* (non-Javadoc)
-     * @see android.support.v4.app.DialogFragment#onSaveInstanceState(android.os.Bundle)
-     */
     override fun onSaveInstanceState(bundle: Bundle) {
         super.onSaveInstanceState(bundle)
         bundle.putInt("titleRes", title)
     }
 
-    /* (non-Javadoc)
-     * @see android.view.View.OnClickListener#onClick(android.view.View)
-     */
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.startTranscodedButton -> {
@@ -213,15 +196,9 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
         bundle.putString(PARAM_TYPE, type)
         bundle.putString(PARAM_NAME, mTitle)
         val event = when (mFileType) {
-            FileType.CHANNEL -> {
-                EVENT_STREAM_LIVE_TV
-            }
-            FileType.RECORDING -> {
-                EVENT_STREAM_RECORDING
-            }
-            else -> {
-                EVENT_STREAM_MEDIA
-            }
+            FileType.CHANNEL -> EVENT_STREAM_LIVE_TV
+            FileType.RECORDING -> EVENT_STREAM_RECORDING
+            else -> EVENT_STREAM_MEDIA
         }
         logEvent(event, bundle)
     }
@@ -233,13 +210,8 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
             val builder = AlertDialog.Builder(context!!)
             builder.setMessage(resources.getString(R.string.noFlashPlayerFound)).setPositiveButton(resources.getString(R.string.yes), this).setNegativeButton(resources.getString(R.string.no), this).show()
         }
-
     }
 
-    /**
-     * starts an [Intent] to play a video stream or throws an Exception if the video url
-     * could not be determined.
-     */
     private fun startVideoIntent(fileType: FileType?) {
         val videoIntent: Intent = getVideoIntent(fileType) ?: return
         startActivity(videoIntent)
@@ -250,20 +222,15 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
         }
     }
 
-    /**
-     * Gets the video intent.
-     *
-     * @return the video intent
-     */
     private fun getVideoIntent(fileType: FileType?): Intent? {
         if (mStreamType == StreamType.DIRECT) {
             return StreamUtils.getDirectUrl(mFileId, mTitle, fileType!!)
-        } else if (qualitySpinner.selectedItemPosition >= 0){
-            val preset = qualitySpinner.selectedItem as Preset
-            val encodingSpeed = encodingSpeedSpinner.selectedItemPosition
-            val hours = if (TextUtils.isEmpty(startHours.text)) 0 else NumberUtils.toInt(startHours.text.toString())
-            val minutes = if (TextUtils.isEmpty(startMinutes.text)) 0 else NumberUtils.toInt(startMinutes.text.toString())
-            val seconds = if (TextUtils.isEmpty(startSeconds.text)) 0 else NumberUtils.toInt(startSeconds.text.toString())
+        } else if (binding.qualitySpinner.selectedItemPosition >= 0) {
+            val preset = binding.qualitySpinner.selectedItem as Preset
+            val encodingSpeed = binding.encodingSpeedSpinner.selectedItemPosition
+            val hours = if (TextUtils.isEmpty(binding.startHours.text)) 0 else NumberUtils.toInt(binding.startHours.text.toString())
+            val minutes = if (TextUtils.isEmpty(binding.startMinutes.text)) 0 else NumberUtils.toInt(binding.startMinutes.text.toString())
+            val seconds = if (TextUtils.isEmpty(binding.startSeconds.text)) 0 else NumberUtils.toInt(binding.startSeconds.text.toString())
             val start = 3600 * hours + 60 * minutes + seconds
             preset.encodingSpeed = encodingSpeed
             return StreamUtils.getTranscodedUrl(context, mFileId, mTitle, preset, fileType, start)
@@ -271,9 +238,6 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
         return null
     }
 
-    /* (non-Javadoc)
-     * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
-     */
     override fun onClick(dialog: DialogInterface, which: Int) {
         when (which) {
             DialogInterface.BUTTON_POSITIVE -> {
@@ -281,7 +245,7 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
                 val editor = prefs.edit()
                 editor.putBoolean("stream_external", false)
                 editor.apply()
-                onClick(startTranscodedButton)
+                onClick(binding.startTranscodedButton)
                 if (getDialog() != null) {
                     getDialog()?.dismiss()
                 } else {
@@ -292,12 +256,11 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
             else -> {
             }
         }
-
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         val editor = prefs.edit()
-        val p = qualitySpinner.selectedItem as Preset
+        val p = binding.qualitySpinner.selectedItem as Preset
         when (parent.id) {
             R.id.encodingSpeedSpinner -> p.encodingSpeed = position
             R.id.audioSpinner -> {
@@ -337,11 +300,6 @@ class StreamConfig : BaseDialogFragment(), OnClickListener, DialogInterface.OnCl
         val EXTRA_DIALOG_TITLE_RES = "_dialog_title_res"
         val EXTRA_TITLE = "title"
 
-        /**
-         * New instance.
-         *
-         * @return the stream config©
-         */
         fun newInstance(): StreamConfig {
             return StreamConfig()
         }
