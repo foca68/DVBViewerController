@@ -27,10 +27,15 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.dvbviewer.controller.R
+import org.dvbviewer.controller.data.DbHelper
+import org.dvbviewer.controller.data.xmltv.XmltvChannelMapper
+import org.dvbviewer.controller.ui.fragments.ChannelList
 import org.dvbviewer.controller.data.entities.DVBViewerPreferences
 import org.dvbviewer.controller.databinding.ActivityPlayerBinding
 import org.dvbviewer.controller.utils.ServerConsts
@@ -79,6 +84,7 @@ class PlayerActivity : AppCompatActivity() {
     private var currentBrightness = -1f   // −1 = follow system
 
     private var timeoutJob: Job? = null
+    private var epgRefreshJob: Job? = null
     private val swipeHandler    = Handler(Looper.getMainLooper())
     private val controlsHandler = Handler(Looper.getMainLooper())
     private val subtitleHandler = Handler(Looper.getMainLooper())
@@ -237,6 +243,8 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun releasePlayer() {
         timeoutJob?.cancel()
+        epgRefreshJob?.cancel()
+        epgRefreshJob = null
         subtitleHandler.removeCallbacksAndMessages(null)
         mediaPlayer?.setEventListener(null)
         mediaPlayer?.detachViews()
@@ -256,6 +264,7 @@ class PlayerActivity : AppCompatActivity() {
                     cancelBufferingTimeout()
                     hideLoading()
                     updatePipParams()
+                    startEpgRefresh()
                 }
                 updatePlayPauseButton()
                 // Fallback subtitle apply: wait 600 ms after first play so all ES are registered
@@ -320,6 +329,44 @@ class PlayerActivity : AppCompatActivity() {
     private fun cancelBufferingTimeout() {
         timeoutJob?.cancel()
         timeoutJob = null
+    }
+
+    // ── EPG real-time refresh (every 60 s) ────────────────────────────────
+
+    private fun startEpgRefresh() {
+        epgRefreshJob?.cancel()
+        epgRefreshJob = lifecycleScope.launch {
+            while (true) {
+                delay(60_000)
+                if (currentTitle.isBlank()) continue
+                refreshEpgOverlay()
+            }
+        }
+    }
+
+    private suspend fun refreshEpgOverlay() {
+        val channelName = currentTitle
+        withContext(Dispatchers.IO) {
+            try {
+                val dbHelper = DbHelper(applicationContext)
+                val xmltvNow = dbHelper.getXmltvNowPlaying(System.currentTimeMillis())
+                if (xmltvNow.isEmpty()) return@withContext
+                val mapper   = XmltvChannelMapper(applicationContext)
+                val resolved = mapper.resolve(channelName, xmltvNow.keys.toList()) ?: return@withContext
+                val entry    = xmltvNow[resolved.xmltvName]              ?: return@withContext
+                val newTitle = ChannelList.xmltvDisplayTitle(entry)      ?: return@withContext
+                withContext(Dispatchers.Main) {
+                    if (newTitle != currentEpgTitle) {
+                        currentEpgTitle = newTitle
+                        binding.tvEpgTitle.text       = newTitle
+                        binding.tvEpgTitle.visibility = View.VISIBLE
+                        Log.d(TAG, "EPG updated: \"$newTitle\"")
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "EPG refresh error: ${e.message}")
+            }
+        }
     }
 
     // ── Overlay helpers ────────────────────────────────────────────────────

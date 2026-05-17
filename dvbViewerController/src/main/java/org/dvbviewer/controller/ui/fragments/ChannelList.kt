@@ -55,6 +55,7 @@ import org.dvbviewer.controller.ui.base.BaseListFragment
 import org.dvbviewer.controller.ui.phone.StreamConfigActivity
 import org.dvbviewer.controller.ui.phone.TimerDetailsActivity
 import org.dvbviewer.controller.ui.widget.CheckableLinearLayout
+import org.dvbviewer.controller.ui.player.PlayerActivity
 import org.dvbviewer.controller.utils.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -433,6 +434,9 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
             xmltvNowCache = cache
         }
 
+        /** Returns the XMLTV entry for [channelName] if present in the cache. */
+        fun getXmltvCacheEntry(channelName: String): EpgEntry? = xmltvNowCache[channelName]
+
         override fun bindView(view: View, context: Context, c: Cursor) {
             val holder      = view.tag as ViewHolder
             val channelName = c.getString(c.getColumnIndex(ChannelTbl.NAME))
@@ -599,7 +603,11 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
                 c.moveToPosition(mChannelIndex)
                 val chan = cursorToChannel(c)
 
+                val epgTitle = getCurrentEpgTitle(c, chan.name) ?: ""
                 val videoIntent = StreamUtils.buildQuickUrl(context, chan.channelID, chan.name, FileType.CHANNEL)
+                if (epgTitle.isNotBlank()) {
+                    videoIntent.putExtra(PlayerActivity.EXTRA_EPG_TITLE, epgTitle)
+                }
                 activity!!.startActivity(videoIntent)
                 val direct = prefs.getBoolean(DVBViewerPreferences.KEY_STREAM_DIRECT, true)
                 val bundle = Bundle()
@@ -616,6 +624,20 @@ class ChannelList : BaseListFragment(), LoaderCallbacks<Cursor>, OnClickListener
             else -> {
             }
         }
+    }
+
+    /**
+     * Returns the best EPG title to show in the player overlay for the channel
+     * at the current cursor position. Checks DVBViewer "now" first, then XMLTV cache.
+     */
+    private fun getCurrentEpgTitle(c: Cursor, channelName: String): String? {
+        val titleIdx = c.getColumnIndex(EpgTbl.TITLE)
+        if (titleIdx >= 0) {
+            val dvbTitle = c.getString(titleIdx)
+            if (!dvbTitle.isNullOrBlank()) return dvbTitle
+        }
+        val entry = mAdapter.getXmltvCacheEntry(channelName) ?: return null
+        return xmltvDisplayTitle(entry)
     }
 
     /**

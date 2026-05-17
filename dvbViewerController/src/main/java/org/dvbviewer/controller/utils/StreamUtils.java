@@ -141,14 +141,21 @@ public class StreamUtils {
     }
 
     /**
-     * Creates an Intent targeting the internal ExoPlayer activity.
+     * Creates an Intent targeting the internal player activity.
      * Called instead of an ACTION_VIEW intent when KEY_USE_INTERNAL_PLAYER is true.
      */
     public static Intent getInternalPlayerIntent(Context context, String url, String mimeType, String title) {
+        return getInternalPlayerIntent(context, url, mimeType, title, "");
+    }
+
+    /** Variant that also carries the current EPG programme title. */
+    public static Intent getInternalPlayerIntent(Context context, String url, String mimeType,
+                                                 String title, String epgTitle) {
         Intent intent = new Intent(context, PlayerActivity.class);
         intent.putExtra(PlayerActivity.EXTRA_URL, url);
         intent.putExtra(PlayerActivity.EXTRA_MIME_TYPE, mimeType != null ? mimeType : "");
         intent.putExtra(PlayerActivity.EXTRA_TITLE, title != null ? title : "");
+        intent.putExtra(PlayerActivity.EXTRA_EPG_TITLE, epgTitle != null ? epgTitle : "");
         return intent;
     }
 
