@@ -13,12 +13,17 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import java.util.concurrent.atomic.AtomicBoolean
 import android.util.Log
 import android.util.Rational
+import android.view.Gravity
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +32,10 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -82,6 +89,7 @@ class PlayerActivity : AppCompatActivity() {
     private var streamStarted     = false
     private var subtitleApplied   = false
     private var currentBrightness = -1f   // −1 = follow system
+    private var currentSpuScale   = 1.0f  // 1.0 = 100 %; read from prefs at init
 
     private var timeoutJob: Job? = null
     private var epgRefreshJob: Job? = null
@@ -89,8 +97,11 @@ class PlayerActivity : AppCompatActivity() {
     private val controlsHandler = Handler(Looper.getMainLooper())
     private val subtitleHandler = Handler(Looper.getMainLooper())
 
-    private var pipOnHome   = true
+    private var pipOnHome    = true
     private var pipReceiver: BroadcastReceiver? = null
+    private val isReleased   = AtomicBoolean(false)
+    // Not tied to activity lifecycle — survives past super.finish() for background cleanup
+    private val playerScope  = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
@@ -109,6 +120,10 @@ class PlayerActivity : AppCompatActivity() {
 
         val prefs  = DVBViewerPreferences(this)
         pipOnHome  = prefs.getBoolean(DVBViewerPreferences.KEY_PLAYER_PIP_ON_HOME, true)
+
+        // Read subtitle scale; values <= 49 are legacy sp-based (pre-LibVLC) → treat as 100 %
+        val rawScale = prefs.getInt(DVBViewerPreferences.KEY_PLAYER_SUBTITLE_SIZE, 100)
+        currentSpuScale = (if (rawScale < 50) 100 else rawScale.coerceIn(50, 200)) / 100f
 
         binding.tvTitle.text = currentTitle
         if (currentEpgTitle.isNotBlank()) {
@@ -149,25 +164,45 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        if (!isInPictureInPictureMode) {
-            mediaPlayer?.stop()
-            releasePlayer()
-        }
+        if (!isInPictureInPictureMode) releasePlayer()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         controlsHandler.removeCallbacksAndMessages(null)
         swipeHandler.removeCallbacksAndMessages(null)
-        mediaPlayer?.stop()
         releasePlayer()
         pipReceiver?.let { runCatching { unregisterReceiver(it) } }
     }
 
     override fun finish() {
-        mediaPlayer?.stop()
-        releasePlayer()
-        super.finish()
+        if (isReleased.compareAndSet(false, true)) {
+            // Capture player refs before nulling — sequence is on main thread, so no race
+            val mp  = mediaPlayer
+            val vlc = libVLC
+            mediaPlayer = null
+            libVLC      = null
+
+            // Cancel lightweight jobs synchronously (these are cheap)
+            timeoutJob?.cancel()
+            epgRefreshJob?.cancel()
+            subtitleHandler.removeCallbacksAndMessages(null)
+            controlsHandler.removeCallbacksAndMessages(null)
+            swipeHandler.removeCallbacksAndMessages(null)
+
+            // Heavy stop+release on IO thread — UI closes immediately below
+            playerScope.launch {
+                runCatching {
+                    mp?.stop()
+                    mp?.setEventListener(null)
+                    mp?.detachViews()
+                    mp?.release()
+                    vlc?.release()
+                }
+                Log.d(TAG, "finish: player released on background thread")
+            }
+        }
+        super.finish()   // closes UI immediately, does not wait for playerScope
     }
 
     override fun onUserLeaveHint() {
@@ -178,6 +213,7 @@ class PlayerActivity : AppCompatActivity() {
     // ── Player initialisation ──────────────────────────────────────────────
 
     private fun initializePlayer() {
+        isReleased.set(false)
         streamStarted   = false
         subtitleApplied = false
         showLoading()
@@ -217,6 +253,7 @@ class PlayerActivity : AppCompatActivity() {
 
         Log.d(TAG, "initializePlayer: url=${cleanUrl.replace(authPassword, "***")}  user=\"$authUser\"")
 
+        val spuScalePct = (currentSpuScale * 100).toInt()
         libVLC = LibVLC(this, arrayListOf(
             "--network-caching=3000",
             "--clock-jitter=0",
@@ -224,6 +261,7 @@ class PlayerActivity : AppCompatActivity() {
             "--file-caching=1500",
             "--live-caching=3000",
             "--no-audio-time-stretch",
+            "--sub-text-scale=$spuScalePct",   // subtitle text size (100 = default)
             "--verbose=0"
         ))
 
@@ -242,16 +280,19 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun releasePlayer() {
+        if (!isReleased.compareAndSet(false, true)) return   // already released — skip
         timeoutJob?.cancel()
         epgRefreshJob?.cancel()
         epgRefreshJob = null
         subtitleHandler.removeCallbacksAndMessages(null)
+        mediaPlayer?.stop()
         mediaPlayer?.setEventListener(null)
         mediaPlayer?.detachViews()
         mediaPlayer?.release()
         mediaPlayer = null
         libVLC?.release()
         libVLC = null
+        Log.d(TAG, "releasePlayer: stream stopped and resources freed")
     }
 
     // ── VLC event listener (called on background thread) ──────────────────
@@ -408,7 +449,8 @@ class PlayerActivity : AppCompatActivity() {
     private fun setupButtons() {
         binding.btnCancel.setOnClickListener    { finish() }
         binding.btnRetry.setOnClickListener     { retry() }
-        binding.btnSubtitles.setOnClickListener { showSubtitleDialog() }
+        binding.btnSubtitles.setOnClickListener    { showSubtitleDialog() }
+        binding.btnSubtitleSize.setOnClickListener { showSubtitleSizeDialog() }
         binding.btnPip.setOnClickListener       { enterPip() }
         binding.btnClose.setOnClickListener     { finish() }
         binding.btnPlayPause.setOnClickListener {
@@ -458,6 +500,58 @@ class PlayerActivity : AppCompatActivity() {
                 getSharedPreferences(PREF_PLAYER, MODE_PRIVATE)
                     .edit().putInt(KEY_LAST_SPU_TRACK, which).apply()
             }
+            .show()
+    }
+
+    private fun showSubtitleSizeDialog() {
+        val currentPct = (currentSpuScale * 100).toInt()
+        val dp16 = (16 * resources.displayMetrics.density).toInt()
+        val dp8  = (8  * resources.displayMetrics.density).toInt()
+
+        val tvValue = TextView(this).apply {
+            text       = "$currentPct%"
+            gravity    = Gravity.CENTER
+            textSize   = 16f
+            setPadding(0, dp8, 0, 0)
+        }
+        val seekBar = SeekBar(this).apply {
+            max      = 150                  // steps from 50 to 200
+            progress = currentPct - 50
+            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(sb: SeekBar, p: Int, fromUser: Boolean) {
+                    tvValue.text = "${p + 50}%"
+                }
+                override fun onStartTrackingTouch(sb: SeekBar) {}
+                override fun onStopTrackingTouch(sb: SeekBar) {}
+            })
+        }
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp16 * 2, dp16, dp16 * 2, dp8)
+            addView(seekBar)
+            addView(tvValue)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.player_subtitle_size_dialog_title)
+            .setView(container)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                val pct   = seekBar.progress + 50
+                val scale = pct / 100f
+                if (scale != currentSpuScale) {
+                    currentSpuScale = scale
+                    DVBViewerPreferences(this)
+                        .prefs.edit()
+                        .putInt(DVBViewerPreferences.KEY_PLAYER_SUBTITLE_SIZE, pct)
+                        .apply()
+                    Log.d(TAG, "SPU text scale → $pct%; restarting stream")
+                    // --sub-text-scale is a LibVLC init option → must recreate player
+                    binding.errorOverlay.visibility = View.GONE
+                    releasePlayer()
+                    initializePlayer()
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 

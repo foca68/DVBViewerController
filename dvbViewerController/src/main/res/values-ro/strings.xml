@@ -18,6 +18,7 @@
     <string name="about">Despre</string>
     <string name="common_colon">:&#160;</string>
     <string name="about_app">Despre DVBViewer Controller</string>
+    <string name="about_description">DVBViewer Controller — Modernizat cu Material Design 3, player intern LibVLC, EPG extern XMLTV</string>
     <string name="version">Versiune aplicație:</string>
     <string name="privacy_policy">Politică de confidențialitate</string>
     <string name="common_all">Toate</string>
@@ -140,6 +141,8 @@
     <string name="player_subtitles_off">Oprit</string>
     <string name="player_pip">Picture-in-Picture</string>
     <string name="player_play_pause">Redare / Pauză</string>
+    <string name="player_subtitle_size_title">Mărime subtitrare</string>
+    <string name="player_subtitle_size_dialog_title">Mărime text subtitrare</string>
     <string name="player_brightness">Luminozitate</string>
     <string name="player_volume">Volum</string>
     <string name="player_error_generic">Eroare la redare. Verificați conexiunea.</string>

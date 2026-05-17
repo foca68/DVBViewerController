@@ -12,6 +12,17 @@
         android:padding="8dp"
         android:text="@string/about_app" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/aboutDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="12dp"
+        android:text="@string/about_description"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">

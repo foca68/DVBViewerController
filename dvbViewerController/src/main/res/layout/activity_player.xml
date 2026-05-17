@@ -76,6 +76,14 @@
             app:srcCompat="@drawable/ic_subtitles_24dp" />
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnSubtitleSize"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/player_subtitle_size_title"
+            app:srcCompat="@drawable/ic_text_size_24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnPip"
             android:layout_width="48dp"
             android:layout_height="48dp"

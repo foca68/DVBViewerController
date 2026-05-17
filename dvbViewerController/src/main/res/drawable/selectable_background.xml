@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--
+  ?attr/ theme attributes are NOT supported in drawable XML before API 31.
+  Using concrete @color references that change via values-night qualifier instead:
+    color_selection_pressed  light=#331976D2  dark=#3390CAF9  (20% alpha primary)
+    color_selection_checked  light=#661976D2  dark=#6690CAF9  (40% alpha primary)
+-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:customstate="http://schemas.android.com/apk/res-auto">
 
-    <item android:drawable="@android:color/transparent" android:state_window_focused="false"/>
-    <item android:drawable="@color/disabled" android:state_enabled="false" android:state_focused="true"/>
-    <item android:drawable="@color/colorAccent" android:state_pressed="true"/>
-    <item android:drawable="@color/colorAccent" android:state_focused="true"/>
-    <item android:drawable="@color/colorPrimary" customstate:state_checked="true"/>
-    <item android:drawable="@color/disabled" customstate:state_disabled="true"/>
-    <item android:drawable="@color/error" customstate:state_error="true"/>
+    <item android:drawable="@android:color/transparent"
+        android:state_window_focused="false" />
+
+    <item android:drawable="@color/disabled"
+        android:state_enabled="false"
+        android:state_focused="true" />
+
+    <item android:drawable="@color/color_selection_pressed"
+        android:state_pressed="true" />
+
+    <item android:drawable="@color/color_selection_pressed"
+        android:state_focused="true" />
+
+    <item android:drawable="@color/color_selection_checked"
+        customstate:state_checked="true" />
+
+    <item android:drawable="@color/disabled"
+        customstate:state_disabled="true" />
+
+    <item android:drawable="@color/error"
+        customstate:state_error="true" />
 
 </selector>

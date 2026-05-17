@@ -37,12 +37,12 @@
             android:title="@string/pref_player_internal_title" />
 
         <SeekBarPreference
-            android:defaultValue="18"
+            android:defaultValue="100"
             android:key="KEY_PLAYER_SUBTITLE_SIZE"
-            android:max="32"
+            android:max="200"
             android:title="@string/pref_player_subtitle_size"
-            app:min="12"
-            app:seekBarIncrement="1"
+            app:min="50"
+            app:seekBarIncrement="5"
             app:showSeekBarValue="true" />
 
         <CheckBoxPreference

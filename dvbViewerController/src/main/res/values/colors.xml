@@ -97,6 +97,10 @@
     <color name="colorPrimary">@color/md_theme_light_primary</color>
     <color name="colorAccent">@color/md_theme_light_secondary</color>
 
+    <!-- Selection overlay colors (light mode: primary #1976D2) -->
+    <color name="color_selection_pressed">#331976D2</color>
+    <color name="color_selection_checked">#661976D2</color>
+
     <!-- Alias: old names kept for drawable references -->
     <color name="disabled">#80BEBEBE</color>
     <color name="error">@color/colorRecording</color>
