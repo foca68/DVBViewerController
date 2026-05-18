@@ -126,26 +126,26 @@
     <string name="pref_item_channel_fav">Use Favourites</string>
     <string name="pref_item_channel_fav_summary">Shows the favourites instead of the channels</string>
     <!-- Player preferences -->
-    <string name="pref_seperator_player">Player video intern</string>
-    <string name="pref_player_internal_title">Foloseste player intern</string>
-    <string name="pref_player_internal_summary">Redare video in aplicatie (ExoPlayer)</string>
-    <string name="pref_player_subtitle_size">Marime subtitrare (sp)</string>
-    <string name="pref_player_pip_title">Picture-in-Picture automat</string>
-    <string name="pref_player_pip_summary">Activeaza PiP la apasarea butonului Home</string>
+    <string name="pref_seperator_player">Internal video player</string>
+    <string name="pref_player_internal_title">Use internal player</string>
+    <string name="pref_player_internal_summary">Play video within the app (ExoPlayer)</string>
+    <string name="pref_player_subtitle_size">Subtitle size (sp)</string>
+    <string name="pref_player_pip_title">Automatic Picture-in-Picture</string>
+    <string name="pref_player_pip_summary">Enable PiP when Home button is pressed</string>
     <!-- Player UI strings -->
-    <string name="player_connecting">Se conecteaza la server…</string>
-    <string name="player_timeout">Serverul nu raspunde. Reincearca?</string>
-    <string name="player_retry">Reincearca</string>
-    <string name="player_cancel">Anuleaza</string>
-    <string name="player_subtitles">Subtitrari</string>
-    <string name="player_subtitles_off">Oprit</string>
+    <string name="player_connecting">Connecting to server…</string>
+    <string name="player_timeout">Server not responding. Retry?</string>
+    <string name="player_retry">Retry</string>
+    <string name="player_cancel">Cancel</string>
+    <string name="player_subtitles">Subtitles</string>
+    <string name="player_subtitles_off">Off</string>
     <string name="player_pip">Picture-in-Picture</string>
-    <string name="player_play_pause">Redare / Pauza</string>
-    <string name="player_subtitle_size_title">Marime subtitrare</string>
-    <string name="player_subtitle_size_dialog_title">Marime text subtitrare</string>
-    <string name="player_brightness">Luminozitate</string>
-    <string name="player_volume">Volum</string>
-    <string name="player_error_generic">Eroare la redare. Verifica conexiunea.</string>
+    <string name="player_play_pause">Play / Pause</string>
+    <string name="player_subtitle_size_title">Subtitle size</string>
+    <string name="player_subtitle_size_dialog_title">Subtitle text size</string>
+    <string name="player_brightness">Brightness</string>
+    <string name="player_volume">Volume</string>
+    <string name="player_error_generic">Playback error. Check your connection.</string>
 
     <!-- EPG Extern (XMLTV) preferences -->
     <string name="pref_seperator_xmltv">External EPG (XMLTV)</string>
