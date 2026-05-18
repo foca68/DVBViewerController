@@ -7,7 +7,10 @@
       "Bash(export JAVA_HOME=\"/c/Program Files/Android/Android Studio/jbr\")",
       "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
       "Bash(./gradlew assembleDebug)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(JAVA_HOME=\"C:/Program Files/Android/Android Studio/jbr\" ./gradlew :dvbViewerController:assembleBetaDebug)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
