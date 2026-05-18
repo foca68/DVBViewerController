@@ -62,6 +62,7 @@
             android:title="@string/pref_xmltv_enabled_title" />
 
         <EditTextPreference
+            android:defaultValue="http://"
             android:dependency="KEY_XMLTV_ENABLED"
             android:dialogTitle="@string/pref_xmltv_url_dialog_title"
             android:inputType="textUri"
