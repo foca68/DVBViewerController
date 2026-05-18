@@ -97,11 +97,10 @@
     <color name="colorPrimary">@color/md_theme_light_primary</color>
     <color name="colorAccent">@color/md_theme_light_secondary</color>
 
-    <!-- Selection overlay colors (light mode: primary #1976D2) -->
-    <color name="color_selection_pressed">#331976D2</color>
-    <color name="color_selection_checked">#661976D2</color>
+    <!-- color_selection_pressed / color_selection_checked are defined in res/color/
+         as color state lists using ?attr/colorPrimaryContainer (API 23+). -->
 
-    <!-- List item text — light mode, overridden in values-night -->
+<!-- List item text — light mode, overridden in values-night -->
     <color name="list_item_text">#212121</color>
     <color name="list_item_text_secondary">#757575</color>
 

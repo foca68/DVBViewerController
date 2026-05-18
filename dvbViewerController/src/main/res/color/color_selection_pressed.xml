@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Press state: slightly more opaque than checked to give press feedback.
+  Using colorPrimaryContainer at full opacity (already lighter than colorPrimary).
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/colorPrimaryContainer" />
+</selector>

@@ -10,11 +10,9 @@
     <color name="colorPrimary">@color/md_theme_dark_primary</color>
     <color name="colorAccent">@color/md_theme_dark_secondary</color>
 
-    <!-- Selection overlay colors (dark mode: primary #90CAF9) -->
-    <color name="color_selection_pressed">#3390CAF9</color>
-    <color name="color_selection_checked">#6690CAF9</color>
+    <!-- color_selection_pressed / color_selection_checked are in res/color/ (dynamic). -->
 
-    <!-- List item text — dark mode, overrides values/colors.xml -->
+<!-- List item text — dark mode, overrides values/colors.xml -->
     <color name="list_item_text">#F3F3F3</color>
     <color name="list_item_text_secondary">#ABABAB</color>
 </resources>

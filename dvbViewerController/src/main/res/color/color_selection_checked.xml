@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ?attr/ in res/color/ is supported from API 23+.
+  colorPrimaryContainer is already the tinted light version of colorPrimary —
+  no alpha needed. Changes dynamically with the active theme.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/colorPrimaryContainer" />
+</selector>
