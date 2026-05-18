@@ -9,6 +9,7 @@ With DVBViewer Controller you can browse the EPG, manage your timers and recordi
 - Internal video player based on LibVLC (supports MPEG-L2 audio, automatic subtitles)
 - External XMLTV EPG support with ErsatzTV integration and fuzzy channel matching
 - Show current program and episode info in channel list
+- Channel name and current program displayed in player overlay
 - Full Romanian language translation
 - Updated to Gradle 8, Kotlin 1.9, AGP 8 - compatible with Java 21
 
