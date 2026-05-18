@@ -23,9 +23,9 @@
             android:layout_gravity="start"
             android:background="@drawable/background_grey"
             android:choiceMode="singleChoice"
-            android:divider="?attr/colorOutlineVariant"
+            android:divider="@color/colorDivider"
             android:dividerHeight="1dp"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/list_item_text" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

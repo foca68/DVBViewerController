@@ -10,7 +10,7 @@
     android:paddingLeft="?android:attr/scrollbarSize"
     android:paddingRight="?android:attr/scrollbarSize"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:textColor="?attr/colorOnSurface"
+    android:textColor="@color/list_item_text"
     app:paddingEnd="?android:attr/scrollbarSize"
     app:paddingStart="?android:attr/scrollbarSize">
 

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceTitleSmall"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/list_item_text" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,14 +37,14 @@
                 android:layout_height="wrap_content"
                 android:text="→ "
                 android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/tvXmltvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?attr/colorOnSurfaceVariant" />
+                android:textColor="@color/list_item_text_secondary" />
 
         </LinearLayout>
 

@@ -85,8 +85,8 @@
             android:layout_alignLeft="@+id/position"
             android:layout_below="@+id/epgTime"
             android:indeterminate="false"
-            android:progressTint="?attr/colorPrimary"
-            android:progressBackgroundTint="?attr/colorSurfaceVariant"
+            android:progressTint="@color/colorPrimary"
+            android:progressBackgroundTint="@color/colorProgressTrack"
             android:layout_alignStart="@+id/position" />
 
         <TextView

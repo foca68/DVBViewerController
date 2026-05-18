@@ -25,7 +25,7 @@
             android:choiceMode="singleChoice"
             android:divider="@color/colorDivider"
             android:dividerHeight="1dp"
-            android:textColor="?attr/colorOnSurface" />
+            android:textColor="@color/list_item_text" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

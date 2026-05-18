@@ -13,4 +13,8 @@
     <!-- Selection overlay colors (dark mode: primary #90CAF9) -->
     <color name="color_selection_pressed">#3390CAF9</color>
     <color name="color_selection_checked">#6690CAF9</color>
+
+    <!-- List item text — dark mode, overrides values/colors.xml -->
+    <color name="list_item_text">#F3F3F3</color>
+    <color name="list_item_text_secondary">#ABABAB</color>
 </resources>
