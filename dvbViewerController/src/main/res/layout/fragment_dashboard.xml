@@ -19,7 +19,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_remote"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/remote" />
 
         </RelativeLayout>
@@ -56,7 +57,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_program"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/channelList" />
 
         </RelativeLayout>
@@ -93,7 +95,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -114,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_timers"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/timer" />
 
         </RelativeLayout>
@@ -130,7 +133,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -151,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_recordings"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/recordings" />
 
         </RelativeLayout>
@@ -167,7 +171,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -188,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_media"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/medias" />
 
         </RelativeLayout>
@@ -204,7 +209,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -225,6 +230,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_tasks"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/tasks" />
 
         </RelativeLayout>
@@ -241,7 +247,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -262,6 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_status"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/status" />
 
         </RelativeLayout>
@@ -278,7 +285,7 @@
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         android:focusable="true">
@@ -299,6 +306,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/img_preferences"
                 android:layout_centerHorizontal="true"
+                android:textColor="?attr/colorOnPrimaryContainer"
                 android:text="@string/preferences" />
 
         </RelativeLayout>
