@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -156,6 +157,11 @@ open class BaseListFragment : BaseFragment() {
         } else {
             val context = context
             val root = FrameLayout(context!!)
+            // Apply themed background so the list shows colorBackground from the active theme
+            val bgAttr = TypedValue()
+            if (context.theme.resolveAttribute(android.R.attr.colorBackground, bgAttr, true)) {
+                root.setBackgroundColor(bgAttr.data)
+            }
 
             // ------------------------------------------------------------------
 
