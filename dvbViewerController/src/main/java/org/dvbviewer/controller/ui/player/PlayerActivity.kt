@@ -299,21 +299,24 @@ class PlayerActivity : AppCompatActivity() {
 
     private val eventListener = MediaPlayer.EventListener { event ->
         when (event.type) {
-            MediaPlayer.Event.Playing -> runOnUiThread {
-                if (!streamStarted) {
-                    streamStarted = true
-                    cancelBufferingTimeout()
-                    hideLoading()
-                    updatePipParams()
-                    startEpgRefresh()
-                }
-                updatePlayPauseButton()
-                // Fallback subtitle apply: wait 600 ms after first play so all ES are registered
-                if (!subtitleApplied) {
-                    subtitleHandler.removeCallbacksAndMessages(null)
-                    subtitleHandler.postDelayed({
-                        mediaPlayer?.let { applySubtitlePreference(it) }
-                    }, 600)
+            MediaPlayer.Event.Playing -> {
+                logAllTracks("Event.Playing")
+                runOnUiThread {
+                    if (!streamStarted) {
+                        streamStarted = true
+                        cancelBufferingTimeout()
+                        hideLoading()
+                        updatePipParams()
+                        startEpgRefresh()
+                    }
+                    updatePlayPauseButton()
+                    // Fallback subtitle apply: wait 600 ms after first play so all ES are registered
+                    if (!subtitleApplied) {
+                        subtitleHandler.removeCallbacksAndMessages(null)
+                        subtitleHandler.postDelayed({
+                            mediaPlayer?.let { applySubtitlePreference(it) }
+                        }, 600)
+                    }
                 }
             }
 
@@ -338,6 +341,7 @@ class PlayerActivity : AppCompatActivity() {
 
             MediaPlayer.Event.ESAdded -> {
                 Log.d(TAG, "ESAdded type=${event.esChangedType}")
+                logAllTracks("ESAdded")
                 // Debounce: each new ES resets the 500 ms timer; fires once all streams added
                 subtitleHandler.removeCallbacksAndMessages(null)
                 subtitleHandler.postDelayed({
@@ -345,6 +349,33 @@ class PlayerActivity : AppCompatActivity() {
                 }, 500)
             }
         }
+    }
+
+    private fun logAllTracks(trigger: String) {
+        val mp = mediaPlayer ?: return
+        val TRACKS_TAG = "PlayerTracks"
+        Log.d(TRACKS_TAG, "=== Tracks @ $trigger ===")
+
+        val videoTracks = mp.videoTracks
+        Log.d(TRACKS_TAG, "Video tracks (${videoTracks?.size ?: 0}):")
+        videoTracks?.forEachIndexed { i, t ->
+            Log.d(TRACKS_TAG, "  [$i] id=${t.id}  name=\"${t.name}\"")
+        }
+
+        val audioTracks = mp.audioTracks
+        Log.d(TRACKS_TAG, "Audio tracks (${audioTracks?.size ?: 0}):")
+        audioTracks?.forEachIndexed { i, t ->
+            Log.d(TRACKS_TAG, "  [$i] id=${t.id}  name=\"${t.name}\"")
+        }
+
+        val spuTracks = mp.spuTracks
+        Log.d(TRACKS_TAG, "SPU/Subtitle tracks (${spuTracks?.size ?: 0}):")
+        spuTracks?.forEachIndexed { i, t ->
+            Log.d(TRACKS_TAG, "  [$i] id=${t.id}  name=\"${t.name}\"")
+        }
+
+        Log.d(TRACKS_TAG, "Selected spuTrack id=${mp.spuTrack}")
+        Log.d(TRACKS_TAG, "=========================")
     }
 
     private fun updatePlayPauseButton() {
