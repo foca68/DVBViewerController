@@ -67,6 +67,8 @@ public class DVBViewerPreferences {
     public static final String KEY_PLAYER_SUBTITLE_SIZE  = "KEY_PLAYER_SUBTITLE_SIZE";
     public static final String KEY_PLAYER_PIP_ON_HOME    = "KEY_PLAYER_PIP_ON_HOME";
 
+    public static final String KEY_APP_THEME = "KEY_APP_THEME";
+
     public static final String KEY_XMLTV_ENABLED = "KEY_XMLTV_ENABLED";
     public static final String KEY_XMLTV_URL = "KEY_XMLTV_URL";
     public static final String KEY_XMLTV_REFRESH_INTERVAL = "KEY_XMLTV_REFRESH_INTERVAL";

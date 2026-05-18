@@ -125,6 +125,16 @@
     <string name="pref_item_channel_show_current_program_wifi_summary">Afișează programul curent doar dacă este conectat WIFI</string>
     <string name="pref_item_channel_fav">Folosește Favorite</string>
     <string name="pref_item_channel_fav_summary">Afișează favoritele în loc de canale</string>
+    <!-- Appearance preferences -->
+    <string name="pref_separator_appearance">Aspect</string>
+    <string name="pref_theme_title">Tema aplicației</string>
+    <string name="pref_theme_summary">Alege tema de culori a aplicației</string>
+    <string name="pref_theme_blue">Albastru (implicit)</string>
+    <string name="pref_theme_purple">Mov</string>
+    <string name="pref_theme_green">Verde</string>
+    <string name="pref_theme_red">Roșu</string>
+    <string name="pref_theme_orange">Portocaliu</string>
+    <string name="pref_theme_gray">Gri</string>
     <!-- Player preferences -->
     <string name="pref_seperator_player">Player video intern</string>
     <string name="pref_player_internal_title">Folosește player intern</string>

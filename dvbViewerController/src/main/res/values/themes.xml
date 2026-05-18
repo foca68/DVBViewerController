@@ -66,4 +66,84 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- ── Color themes — all extend Theme.DVB.NoActionBar ─────────────── -->
+
+    <!-- Blue (default — same colors as base Theme.DVB) -->
+    <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
+
+    <!-- Purple: primary #6A1B9A, secondary #BF360C deep-orange -->
+    <style name="Theme.DVB.Purple" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#6A1B9A</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#E9D5FF</item>
+        <item name="colorOnPrimaryContainer">#21003E</item>
+        <item name="colorSecondary">#BF360C</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#FFCCBC</item>
+        <item name="colorOnSecondaryContainer">#370000</item>
+        <item name="colorAccent">#6A1B9A</item>
+        <item name="colorPrimaryDark">#E9D5FF</item>
+        <item name="colorControlActivated">#6A1B9A</item>
+    </style>
+
+    <!-- Green: primary #1B5E20, secondary #1565C0 blue -->
+    <style name="Theme.DVB.Green" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#1B5E20</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#C8E6C9</item>
+        <item name="colorOnPrimaryContainer">#003300</item>
+        <item name="colorSecondary">#1565C0</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#BBDEFB</item>
+        <item name="colorOnSecondaryContainer">#001E5C</item>
+        <item name="colorAccent">#1B5E20</item>
+        <item name="colorPrimaryDark">#C8E6C9</item>
+        <item name="colorControlActivated">#1B5E20</item>
+    </style>
+
+    <!-- Red: primary #B71C1C, secondary #1565C0 blue -->
+    <style name="Theme.DVB.Red" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#B71C1C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#FFCDD2</item>
+        <item name="colorOnPrimaryContainer">#370000</item>
+        <item name="colorSecondary">#1565C0</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#BBDEFB</item>
+        <item name="colorOnSecondaryContainer">#001E5C</item>
+        <item name="colorAccent">#B71C1C</item>
+        <item name="colorPrimaryDark">#FFCDD2</item>
+        <item name="colorControlActivated">#B71C1C</item>
+    </style>
+
+    <!-- Orange: primary #BF360C deep-orange, secondary #1565C0 blue -->
+    <style name="Theme.DVB.Orange" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#BF360C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#FFCCBC</item>
+        <item name="colorOnPrimaryContainer">#3E0000</item>
+        <item name="colorSecondary">#1565C0</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#BBDEFB</item>
+        <item name="colorOnSecondaryContainer">#001E5C</item>
+        <item name="colorAccent">#BF360C</item>
+        <item name="colorPrimaryDark">#FFCCBC</item>
+        <item name="colorControlActivated">#BF360C</item>
+    </style>
+
+    <!-- Gray: primary #263238 blue-grey, secondary #2E7D32 green -->
+    <style name="Theme.DVB.Gray" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#263238</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#CFD8DC</item>
+        <item name="colorOnPrimaryContainer">#0C1A1F</item>
+        <item name="colorSecondary">#2E7D32</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#C8E6C9</item>
+        <item name="colorOnSecondaryContainer">#003300</item>
+        <item name="colorAccent">#263238</item>
+        <item name="colorPrimaryDark">#CFD8DC</item>
+        <item name="colorControlActivated">#263238</item>
+    </style>
+
 </resources>

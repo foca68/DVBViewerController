@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.dvbviewer.controller.R
 import org.dvbviewer.controller.data.DbHelper
+import org.dvbviewer.controller.utils.ThemeHelper
 import org.dvbviewer.controller.data.xmltv.XmltvChannelMapper
 import org.dvbviewer.controller.ui.fragments.ChannelList
 import org.dvbviewer.controller.data.entities.DVBViewerPreferences
@@ -106,6 +107,7 @@ class PlayerActivity : AppCompatActivity() {
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)

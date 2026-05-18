@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.preference.CheckBoxPreference
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import org.dvbviewer.controller.R
@@ -18,6 +19,13 @@ class DVBViewerPreferenceFragment : PreferenceFragmentCompat() {
         val prefMgr = preferenceManager
         prefMgr.sharedPreferencesName = DVBViewerPreferences.PREFS
         addPreferencesFromResource(R.xml.preferences)
+
+        // Restart activity immediately when theme changes
+        preferenceScreen.findPreference<ListPreference>(DVBViewerPreferences.KEY_APP_THEME)
+            ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+            activity?.recreate()
+            true
+        }
 
         // Navigate to connection settings screen
         preferenceScreen.findPreference<Preference>(KEY_RS_SETTINGS)

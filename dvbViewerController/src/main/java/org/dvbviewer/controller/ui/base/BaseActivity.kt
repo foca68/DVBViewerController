@@ -37,6 +37,7 @@ import org.apache.commons.lang3.StringUtils
 import org.dvbviewer.controller.BuildConfig
 import org.dvbviewer.controller.R
 import org.dvbviewer.controller.utils.Config
+import org.dvbviewer.controller.utils.ThemeHelper
 
 /**
  * A base activity that defers common functionality across app activities to an.
@@ -48,6 +49,8 @@ import org.dvbviewer.controller.utils.Config
 abstract class BaseActivity : AppCompatActivity() {
 
     var mFirebaseAnalytics: FirebaseAnalytics? = null
+
+    private var appliedTheme: String = "blue"
 
     open val mMessageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -73,6 +76,8 @@ abstract class BaseActivity : AppCompatActivity() {
      * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
      */
     override fun onCreate(arg0: Bundle?) {
+        appliedTheme = ThemeHelper.currentTheme(this)
+        ThemeHelper.applyTheme(this)
         super.onCreate(arg0)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         if (!BuildConfig.DEBUG) {
@@ -85,6 +90,10 @@ abstract class BaseActivity : AppCompatActivity() {
 	 */
     override fun onResume() {
         super.onResume()
+        if (ThemeHelper.currentTheme(this) != appliedTheme) {
+            recreate()
+            return
+        }
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 IntentFilter(BaseFragment.MESSAGE_EVENT))
         if (!TextUtils.isEmpty(Config.CURRENT_RS_PROFILE) && supportActionBar != null) {

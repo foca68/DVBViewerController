@@ -125,6 +125,16 @@
     <string name="pref_item_channel_show_current_program_wifi_summary">Shows the current program in the channel list only if WIFI is connected</string>
     <string name="pref_item_channel_fav">Use Favourites</string>
     <string name="pref_item_channel_fav_summary">Shows the favourites instead of the channels</string>
+    <!-- Appearance preferences -->
+    <string name="pref_separator_appearance">Appearance</string>
+    <string name="pref_theme_title">App theme</string>
+    <string name="pref_theme_summary">Choose the color theme of the app</string>
+    <string name="pref_theme_blue">Blue (default)</string>
+    <string name="pref_theme_purple">Purple</string>
+    <string name="pref_theme_green">Green</string>
+    <string name="pref_theme_red">Red</string>
+    <string name="pref_theme_orange">Orange</string>
+    <string name="pref_theme_gray">Gray</string>
     <!-- Player preferences -->
     <string name="pref_seperator_player">Internal video player</string>
     <string name="pref_player_internal_title">Use internal player</string>

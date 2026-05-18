@@ -28,6 +28,18 @@
             android:title="@string/pref_item_channel_fav" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_separator_appearance">
+
+        <ListPreference
+            android:defaultValue="blue"
+            android:entries="@array/pref_theme_entries"
+            android:entryValues="@array/pref_theme_values"
+            android:key="KEY_APP_THEME"
+            android:summary="@string/pref_theme_summary"
+            android:title="@string/pref_theme_title" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_seperator_player">
 
         <CheckBoxPreference

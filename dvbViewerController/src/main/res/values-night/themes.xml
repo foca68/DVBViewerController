@@ -61,4 +61,79 @@
 
     </style>
 
+    <!-- ── Color themes dark variants ─────────────────────────────────────
+         Parent Theme.DVB.NoActionBar chains to night Theme.DVB automatically.    -->
+
+    <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
+
+    <style name="Theme.DVB.Purple" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#CE93D8</item>
+        <item name="colorOnPrimary">#38005A</item>
+        <item name="colorPrimaryContainer">#6A1B9A</item>
+        <item name="colorOnPrimaryContainer">#F3E5F5</item>
+        <item name="colorSecondary">#FF9E80</item>
+        <item name="colorOnSecondary">#4D1600</item>
+        <item name="colorSecondaryContainer">#7C3010</item>
+        <item name="colorOnSecondaryContainer">#FFCCBC</item>
+        <item name="colorAccent">#CE93D8</item>
+        <item name="colorPrimaryDark">#6A1B9A</item>
+        <item name="colorControlActivated">#CE93D8</item>
+    </style>
+
+    <style name="Theme.DVB.Green" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#A5D6A7</item>
+        <item name="colorOnPrimary">#003310</item>
+        <item name="colorPrimaryContainer">#1B5E20</item>
+        <item name="colorOnPrimaryContainer">#C8E6C9</item>
+        <item name="colorSecondary">#90CAF9</item>
+        <item name="colorOnSecondary">#00204A</item>
+        <item name="colorSecondaryContainer">#1565C0</item>
+        <item name="colorOnSecondaryContainer">#BBDEFB</item>
+        <item name="colorAccent">#A5D6A7</item>
+        <item name="colorPrimaryDark">#1B5E20</item>
+        <item name="colorControlActivated">#A5D6A7</item>
+    </style>
+
+    <style name="Theme.DVB.Red" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#EF9A9A</item>
+        <item name="colorOnPrimary">#4E0000</item>
+        <item name="colorPrimaryContainer">#B71C1C</item>
+        <item name="colorOnPrimaryContainer">#FFCDD2</item>
+        <item name="colorSecondary">#90CAF9</item>
+        <item name="colorOnSecondary">#00204A</item>
+        <item name="colorSecondaryContainer">#1565C0</item>
+        <item name="colorOnSecondaryContainer">#BBDEFB</item>
+        <item name="colorAccent">#EF9A9A</item>
+        <item name="colorPrimaryDark">#B71C1C</item>
+        <item name="colorControlActivated">#EF9A9A</item>
+    </style>
+
+    <style name="Theme.DVB.Orange" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#FFAB91</item>
+        <item name="colorOnPrimary">#4E1500</item>
+        <item name="colorPrimaryContainer">#BF360C</item>
+        <item name="colorOnPrimaryContainer">#FFCCBC</item>
+        <item name="colorSecondary">#90CAF9</item>
+        <item name="colorOnSecondary">#00204A</item>
+        <item name="colorSecondaryContainer">#1565C0</item>
+        <item name="colorOnSecondaryContainer">#BBDEFB</item>
+        <item name="colorAccent">#FFAB91</item>
+        <item name="colorPrimaryDark">#BF360C</item>
+        <item name="colorControlActivated">#FFAB91</item>
+    </style>
+
+    <style name="Theme.DVB.Gray" parent="Theme.DVB.NoActionBar">
+        <item name="colorPrimary">#B0BEC5</item>
+        <item name="colorOnPrimary">#1A2529</item>
+        <item name="colorPrimaryContainer">#263238</item>
+        <item name="colorOnPrimaryContainer">#CFD8DC</item>
+        <item name="colorSecondary">#A5D6A7</item>
+        <item name="colorOnSecondary">#003310</item>
+        <item name="colorSecondaryContainer">#2E7D32</item>
+        <item name="colorOnSecondaryContainer">#C8E6C9</item>
+        <item name="colorAccent">#B0BEC5</item>
+        <item name="colorPrimaryDark">#263238</item>
+        <item name="colorControlActivated">#B0BEC5</item>
+    </style>
+
 </resources>
