@@ -13,6 +13,11 @@ With DVBViewer Controller you can browse the EPG, manage your timers and recordi
 - Full Romanian language translation
 - Updated to Gradle 8, Kotlin 1.9, AGP 8 - compatible with Java 21
 
+## Download
+[![Download APK](https://img.shields.io/badge/Download-v2.0.0-blue.svg)](https://github.com/foca68/DVBViewerController/releases/tag/v2.0.0)
+
+Download the latest APK from the [Releases page](https://github.com/foca68/DVBViewerController/releases/latest).
+
 ## Features
 - Remote control DVBViewer (Recording Service 1.30.1.0 required)
 - Browse EPG and schedule timers
