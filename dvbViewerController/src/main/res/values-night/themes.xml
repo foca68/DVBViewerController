@@ -43,7 +43,7 @@
         <item name="colorOutline">@color/md_theme_dark_outline</item>
         <item name="colorOutlineVariant">@color/md_theme_dark_outlineVariant</item>
 
-        <!-- Legacy compat attributes -->
+        <!-- Legacy compat -->
         <item name="colorAccent">@color/md_theme_dark_secondary</item>
         <item name="colorPrimaryDark">@color/md_theme_dark_primaryContainer</item>
         <item name="colorControlActivated">@color/md_theme_dark_primary</item>
@@ -59,14 +59,71 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
 
+        <!-- Colored toolbar -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+
     </style>
 
-    <!-- ── Color themes dark variants ─────────────────────────────────────
-         Parent Theme.DVB.NoActionBar chains to night Theme.DVB automatically.    -->
+    <!--
+        Dark base for color themes — extends Theme.Material3.Dark.NoActionBar directly.
+        Same rationale as the light version: avoids colorPrimary conflict in applyStyle chain.
+    -->
+    <style name="Theme.DVB.ColorsBase" parent="Theme.Material3.Dark.NoActionBar">
 
+        <!-- Tertiary — neutral dark, same for all dark color themes -->
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+
+        <!-- Background / Surface — dark neutral -->
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outlineVariant</item>
+
+        <!-- Non-primary legacy compat -->
+        <item name="colorControlNormal">@color/md_theme_dark_onSurfaceVariant</item>
+
+        <!-- Button shapes -->
+        <item name="materialButtonStyle">@style/Widget.App.Button.Primary</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.App.Button.TextButton</item>
+
+        <!-- App-specific -->
+        <item name="actionModeBackground">@color/colorRecording</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarStyleHorizontal</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+
+        <!-- Colored toolbar -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+
+        <!-- NoActionBar settings -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+
+    </style>
+
+    <!-- Blue — alias for default dark blue theme -->
     <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
 
-    <style name="Theme.DVB.Purple" parent="Theme.DVB.NoActionBar">
+    <!-- ── Dark color themes — extend ColorsBase (NOT Theme.DVB) ─────────── -->
+
+    <style name="Theme.DVB.Purple" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#CE93D8</item>
         <item name="colorOnPrimary">#38005A</item>
         <item name="colorPrimaryContainer">#6A1B9A</item>
@@ -78,9 +135,11 @@
         <item name="colorAccent">#CE93D8</item>
         <item name="colorPrimaryDark">#6A1B9A</item>
         <item name="colorControlActivated">#CE93D8</item>
+        <item name="android:statusBarColor">#38005A</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
     </style>
 
-    <style name="Theme.DVB.Green" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Green" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#A5D6A7</item>
         <item name="colorOnPrimary">#003310</item>
         <item name="colorPrimaryContainer">#1B5E20</item>
@@ -92,9 +151,11 @@
         <item name="colorAccent">#A5D6A7</item>
         <item name="colorPrimaryDark">#1B5E20</item>
         <item name="colorControlActivated">#A5D6A7</item>
+        <item name="android:statusBarColor">#003310</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
     </style>
 
-    <style name="Theme.DVB.Red" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Red" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#EF9A9A</item>
         <item name="colorOnPrimary">#4E0000</item>
         <item name="colorPrimaryContainer">#B71C1C</item>
@@ -106,9 +167,11 @@
         <item name="colorAccent">#EF9A9A</item>
         <item name="colorPrimaryDark">#B71C1C</item>
         <item name="colorControlActivated">#EF9A9A</item>
+        <item name="android:statusBarColor">#4E0000</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
     </style>
 
-    <style name="Theme.DVB.Orange" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Orange" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#FFAB91</item>
         <item name="colorOnPrimary">#4E1500</item>
         <item name="colorPrimaryContainer">#BF360C</item>
@@ -120,9 +183,11 @@
         <item name="colorAccent">#FFAB91</item>
         <item name="colorPrimaryDark">#BF360C</item>
         <item name="colorControlActivated">#FFAB91</item>
+        <item name="android:statusBarColor">#4E1500</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
     </style>
 
-    <style name="Theme.DVB.Gray" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Gray" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#B0BEC5</item>
         <item name="colorOnPrimary">#1A2529</item>
         <item name="colorPrimaryContainer">#263238</item>
@@ -134,6 +199,8 @@
         <item name="colorAccent">#B0BEC5</item>
         <item name="colorPrimaryDark">#263238</item>
         <item name="colorControlActivated">#B0BEC5</item>
+        <item name="android:statusBarColor">#1A2529</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
     </style>
 
 </resources>

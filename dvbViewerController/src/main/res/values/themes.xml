@@ -2,8 +2,8 @@
 <resources>
 
     <!--
-        Light theme — parent: Theme.Material3.Light.NoActionBar
-        (app uses Toolbar everywhere; system ActionBar is not needed)
+        Light theme (blue default) — parent: Theme.Material3.Light.NoActionBar
+        Used by the manifest for all activities.
     -->
     <style name="Theme.DVB" parent="Theme.Material3.Light.NoActionBar">
 
@@ -43,13 +43,13 @@
         <item name="colorOutline">@color/md_theme_light_outline</item>
         <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
 
-        <!-- Legacy compat attributes (still used by some AppCompat components) -->
+        <!-- Legacy compat (AppCompat components) -->
         <item name="colorAccent">@color/md_theme_light_secondary</item>
         <item name="colorPrimaryDark">@color/md_theme_light_primaryContainer</item>
         <item name="colorControlActivated">@color/md_theme_light_primary</item>
         <item name="colorControlNormal">@color/md_theme_light_onSurfaceVariant</item>
 
-        <!-- Button shapes — applies to all <Button> widgets via MaterialComponentsViewInflater -->
+        <!-- Button shapes -->
         <item name="materialButtonStyle">@style/Widget.App.Button.Primary</item>
         <item name="android:buttonBarButtonStyle">@style/Widget.App.Button.TextButton</item>
 
@@ -59,7 +59,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
 
-        <!-- Colored toolbar — responds to colorPrimary so all color themes show on AppBar -->
+        <!-- Colored toolbar -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
 
@@ -70,28 +70,90 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <!-- ── Color themes — all extend Theme.DVB.NoActionBar ─────────────── -->
+    <!--
+        Base for all color themes.
 
-    <!-- Blue (default — same colors as base Theme.DVB) -->
-    <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
+        IMPORTANT: extends Theme.Material3.Light.NoActionBar directly, NOT Theme.DVB.
+        Reason: Activity.setTheme() calls applyStyle(resId, force=true) which processes
+        the style hierarchy leaf→root. With force=true the ROOT (last processed) wins.
+        If color themes inherited Theme.DVB, Theme.DVB's explicit colorPrimary=#1B5EAE
+        would be applied AFTER the child's custom colorPrimary, overwriting it.
+        By using Theme.Material3.Light.NoActionBar as the root (which does NOT set
+        colorPrimary to a hardcoded app value), the child's colorPrimary survives.
 
-    <!-- Purple: primary #6A1B9A, secondary #BF360C deep-orange -->
-    <style name="Theme.DVB.Purple" parent="Theme.DVB.NoActionBar">
-        <item name="colorPrimary">#6A1B9A</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#E9D5FF</item>
-        <item name="colorOnPrimaryContainer">#21003E</item>
-        <item name="colorSecondary">#BF360C</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorSecondaryContainer">#FFCCBC</item>
-        <item name="colorOnSecondaryContainer">#370000</item>
-        <item name="colorAccent">#6A1B9A</item>
-        <item name="colorPrimaryDark">#E9D5FF</item>
-        <item name="colorControlActivated">#6A1B9A</item>
+        Contains all non-primary app attributes shared by every color theme.
+    -->
+    <style name="Theme.DVB.ColorsBase" parent="Theme.Material3.Light.NoActionBar">
+
+        <!-- Tertiary — neutral, reused across all color themes -->
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+
+        <!-- Error — same for all themes -->
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+
+        <!-- Background / Surface — neutral, same for all themes -->
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
+
+        <!-- Non-primary legacy compat -->
+        <item name="colorControlNormal">@color/md_theme_light_onSurfaceVariant</item>
+
+        <!-- Button shapes -->
+        <item name="materialButtonStyle">@style/Widget.App.Button.Primary</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.App.Button.TextButton</item>
+
+        <!-- App-specific -->
+        <item name="actionModeBackground">@color/colorRecording</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarStyleHorizontal</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+
+        <!-- Colored toolbar — uses ?attr/colorPrimary set by each child theme -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+
+        <!-- NoActionBar settings -->
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+
     </style>
 
-    <!-- Green: primary #1B5E20, secondary #1565C0 blue -->
-    <style name="Theme.DVB.Green" parent="Theme.DVB.NoActionBar">
+    <!-- Blue — alias for the default blue theme -->
+    <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
+
+    <!-- ── Color themes — extend ColorsBase (NOT Theme.DVB) ──────────────── -->
+
+    <style name="Theme.DVB.Purple" parent="Theme.DVB.ColorsBase">
+        <item name="colorPrimary">#7B1FA2</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#E1BEE7</item>
+        <item name="colorOnPrimaryContainer">#4A148C</item>
+        <item name="colorSecondary">#F57C00</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#FFE0B2</item>
+        <item name="colorOnSecondaryContainer">#3E1A00</item>
+        <item name="colorAccent">#7B1FA2</item>
+        <item name="colorPrimaryDark">#E1BEE7</item>
+        <item name="colorControlActivated">#7B1FA2</item>
+        <item name="android:statusBarColor">#7B1FA2</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+    </style>
+
+    <style name="Theme.DVB.Green" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#1B5E20</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#C8E6C9</item>
@@ -103,10 +165,11 @@
         <item name="colorAccent">#1B5E20</item>
         <item name="colorPrimaryDark">#C8E6C9</item>
         <item name="colorControlActivated">#1B5E20</item>
+        <item name="android:statusBarColor">#1B5E20</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
     </style>
 
-    <!-- Red: primary #B71C1C, secondary #1565C0 blue -->
-    <style name="Theme.DVB.Red" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Red" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#B71C1C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#FFCDD2</item>
@@ -118,10 +181,11 @@
         <item name="colorAccent">#B71C1C</item>
         <item name="colorPrimaryDark">#FFCDD2</item>
         <item name="colorControlActivated">#B71C1C</item>
+        <item name="android:statusBarColor">#B71C1C</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
     </style>
 
-    <!-- Orange: primary #BF360C deep-orange, secondary #1565C0 blue -->
-    <style name="Theme.DVB.Orange" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Orange" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#BF360C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#FFCCBC</item>
@@ -133,10 +197,11 @@
         <item name="colorAccent">#BF360C</item>
         <item name="colorPrimaryDark">#FFCCBC</item>
         <item name="colorControlActivated">#BF360C</item>
+        <item name="android:statusBarColor">#BF360C</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
     </style>
 
-    <!-- Gray: primary #263238 blue-grey, secondary #2E7D32 green -->
-    <style name="Theme.DVB.Gray" parent="Theme.DVB.NoActionBar">
+    <style name="Theme.DVB.Gray" parent="Theme.DVB.ColorsBase">
         <item name="colorPrimary">#263238</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#CFD8DC</item>
@@ -148,6 +213,8 @@
         <item name="colorAccent">#263238</item>
         <item name="colorPrimaryDark">#CFD8DC</item>
         <item name="colorControlActivated">#263238</item>
+        <item name="android:statusBarColor">#263238</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
     </style>
 
 </resources>
