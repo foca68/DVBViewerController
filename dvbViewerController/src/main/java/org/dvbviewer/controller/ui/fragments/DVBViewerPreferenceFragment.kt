@@ -22,8 +22,25 @@ class DVBViewerPreferenceFragment : PreferenceFragmentCompat() {
 
         // Restart activity immediately when theme changes
         preferenceScreen.findPreference<ListPreference>(DVBViewerPreferences.KEY_APP_THEME)
-            ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+            ?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { pref, newValue ->
+            val newTheme = newValue as? String ?: "?"
+            val prefsFile = DVBViewerPreferences.PREFS
+            val key = DVBViewerPreferences.KEY_APP_THEME
+            Log.d(TAG_THEME, "KEY_APP_THEME changing to \"$newTheme\"")
+            Log.d(TAG_THEME, "PreferenceManager sharedPrefsName=\"${prefMgr.sharedPreferencesName}\" file expected=\"$prefsFile\"")
+            // returning true tells PreferenceManager to persist newValue AFTER this listener returns
+            // recreate() is async (posts to handler) so persistence happens first
+            Log.d(TAG_THEME, "Scheduling recreate() — value will be persisted before recreation")
             activity?.recreate()
+            // Verify after a short delay what was actually saved (on UI thread, after persistence)
+            pref.context.mainLooper.let { looper ->
+                android.os.Handler(looper).postDelayed({
+                    val saved = pref.context
+                        .getSharedPreferences(prefsFile, android.content.Context.MODE_PRIVATE)
+                        .getString(key, null)
+                    Log.d(TAG_THEME, "POST-PERSIST check: key=\"$key\" saved value=\"$saved\" in file=\"$prefsFile\"")
+                }, 200)
+            }
             true
         }
 
@@ -58,6 +75,7 @@ class DVBViewerPreferenceFragment : PreferenceFragmentCompat() {
 
     companion object {
         private const val TAG            = "DVBViewerPrefFragment"
+        private const val TAG_THEME      = "ThemeDebug"
         private const val KEY_RS_SETTINGS = "KEY_RS_SETTINGS"
     }
 }

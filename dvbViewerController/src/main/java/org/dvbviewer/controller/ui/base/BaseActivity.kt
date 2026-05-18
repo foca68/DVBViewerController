@@ -77,10 +77,13 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     override fun onCreate(arg0: Bundle?) {
         // setTheme() MUST be called before super.onCreate() so views are inflated with the correct theme
+        Log.d("ThemeDebug", "BaseActivity.onCreate: START class=${localClassName}")
         appliedTheme = ThemeHelper.currentTheme(this)
+        Log.d("ThemeDebug", "BaseActivity.onCreate: appliedTheme=\"$appliedTheme\" → calling applyTheme()")
         ThemeHelper.applyTheme(this)
+        Log.d("ThemeDebug", "BaseActivity.onCreate: applyTheme() done, calling super.onCreate()")
         super.onCreate(arg0)
-        Log.d(TAG, "onCreate: theme applied = $appliedTheme")
+        Log.d("ThemeDebug", "BaseActivity.onCreate: END theme=\"$appliedTheme\"")
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         if (!BuildConfig.DEBUG) {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
