@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Ripple supports ?attr/ from API 21+, so colorPrimary responds to theme switching.
-    Checked state: a persistent colorPrimaryContainer fill behind the ripple.
+  API 21+ compatible StateListDrawable — uses only @color/ references.
+  ?attr/ is not reliably supported in drawable XML below API 31 and crashes on API 29.
+  Press/selection colors adapt for dark mode via values-night/colors.xml.
 -->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?attr/colorPrimary">
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customstate="http://schemas.android.com/apk/res-auto">
 
-    <!-- Checked / selected state: persistent tinted background -->
-    <item android:id="@android:id/background">
-        <selector xmlns:customstate="http://schemas.android.com/apk/res-auto">
-            <item android:drawable="@android:color/transparent"
-                android:state_window_focused="false" />
-            <item android:drawable="@color/disabled"
-                android:state_enabled="false" />
-            <item android:drawable="?attr/colorPrimaryContainer"
-                customstate:state_checked="true" />
-            <item android:drawable="@color/error"
-                customstate:state_error="true" />
-            <item android:drawable="@android:color/transparent" />
-        </selector>
-    </item>
+    <item android:drawable="@android:color/transparent"
+        android:state_window_focused="false" />
 
-    <!-- Ripple mask: full bounds -->
-    <item android:id="@android:id/mask"
-        android:drawable="@android:color/white" />
+    <item android:drawable="@color/disabled"
+        android:state_enabled="false" />
 
-</ripple>
+    <item android:drawable="@color/color_selection_pressed"
+        android:state_pressed="true" />
+
+    <item android:drawable="@color/color_selection_pressed"
+        android:state_focused="true" />
+
+    <item android:drawable="@color/color_selection_checked"
+        customstate:state_checked="true" />
+
+    <item android:drawable="@color/disabled"
+        customstate:state_disabled="true" />
+
+    <item android:drawable="@color/error"
+        customstate:state_error="true" />
+
+</selector>
