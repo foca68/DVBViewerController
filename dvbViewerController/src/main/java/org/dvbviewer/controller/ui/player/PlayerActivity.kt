@@ -39,6 +39,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.view.ContextThemeWrapper
 import org.dvbviewer.controller.R
 import org.dvbviewer.controller.data.DbHelper
 import org.dvbviewer.controller.utils.ThemeHelper
@@ -106,8 +107,11 @@ class PlayerActivity : AppCompatActivity() {
 
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ContextThemeWrapper(newBase, ThemeHelper.getThemeResId(newBase)))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        ThemeHelper.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)

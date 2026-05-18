@@ -23,6 +23,8 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
+import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.apache.commons.lang3.StringUtils
@@ -51,6 +54,17 @@ abstract class BaseActivity : AppCompatActivity() {
     var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     private var appliedTheme: String = "blue"
+
+    /**
+     * Called before onCreate() — wraps the base context with the user's selected theme so that
+     * setContentView() calls (even those before super.onCreate()) use the correct colors.
+     * This is necessary because HomeActivity calls setContentView() before super.onCreate().
+     */
+    override fun attachBaseContext(newBase: Context) {
+        val resId = ThemeHelper.getThemeResId(newBase)
+        Log.d("ThemeDebug", "attachBaseContext: wrapping with resId=$resId")
+        super.attachBaseContext(ContextThemeWrapper(newBase, resId))
+    }
 
     open val mMessageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -103,6 +117,24 @@ abstract class BaseActivity : AppCompatActivity() {
     /* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onResume()
 	 */
+    override fun onStart() {
+        super.onStart()
+        // M3 AppBarLayout.onAttachedToWindow() sets backgroundTintList=colorSurface,
+        // overriding the style's android:background. Fix it here after all views are attached.
+        applyToolbarPrimaryColor()
+    }
+
+    private fun applyToolbarPrimaryColor() {
+        val toolbar = findViewById<Toolbar?>(R.id.toolbar) ?: return
+        val tv = TypedValue()
+        if (!theme.resolveAttribute(android.R.attr.colorPrimary, tv, true)) return
+        val color = tv.data
+        Log.d("ThemeDebug", "applyToolbarPrimaryColor: #${Integer.toHexString(color)}")
+        toolbar.setBackgroundColor(color)
+        (toolbar.parent as? AppBarLayout)?.setBackgroundColor(color)
+        window.statusBarColor = color
+    }
+
     override fun onResume() {
         super.onResume()
         if (ThemeHelper.currentTheme(this) != appliedTheme) {

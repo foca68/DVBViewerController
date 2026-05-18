@@ -10,20 +10,12 @@ object ThemeHelper {
 
     private const val TAG = "ThemeDebug"
 
-    fun applyTheme(activity: AppCompatActivity) {
-        val prefsFile = DVBViewerPreferences.PREFS
-        val key       = DVBViewerPreferences.KEY_APP_THEME
-        val prefs     = activity.getSharedPreferences(prefsFile, Context.MODE_PRIVATE)
-
-        val allKeys = prefs.all.keys.joinToString()
-        Log.d(TAG, "applyTheme: reading from SharedPreferences file=\"$prefsFile\"")
-        Log.d(TAG, "applyTheme: all keys in file=[$allKeys]")
-
-        val theme = prefs.getString(key, null)
-        Log.d(TAG, "applyTheme: raw value for key=\"$key\" → \"$theme\" (null means key absent)")
-
-        val resolvedTheme = theme ?: "blue"
-        val resId = when (resolvedTheme) {
+    fun getThemeResId(context: Context): Int {
+        val theme = context
+            .getSharedPreferences(DVBViewerPreferences.PREFS, Context.MODE_PRIVATE)
+            .getString(DVBViewerPreferences.KEY_APP_THEME, null)
+        Log.d(TAG, "getThemeResId: theme=\"$theme\"")
+        return when (theme) {
             "purple" -> R.style.Theme_DVB_Purple
             "green"  -> R.style.Theme_DVB_Green
             "red"    -> R.style.Theme_DVB_Red
@@ -31,17 +23,19 @@ object ThemeHelper {
             "gray"   -> R.style.Theme_DVB_Gray
             else     -> R.style.Theme_DVB_Blue
         }
-        Log.d(TAG, "applyTheme: resolved theme=\"$resolvedTheme\" → resId=$resId calling setTheme()")
+    }
+
+    fun applyTheme(activity: AppCompatActivity) {
+        val resId = getThemeResId(activity)
+        Log.d(TAG, "applyTheme: ${activity.localClassName} resId=$resId")
         activity.setTheme(resId)
-        Log.d(TAG, "applyTheme: setTheme() called on ${activity.localClassName}")
     }
 
     fun currentTheme(context: Context): String {
-        val prefsFile = DVBViewerPreferences.PREFS
-        val key       = DVBViewerPreferences.KEY_APP_THEME
-        val value     = context.getSharedPreferences(prefsFile, Context.MODE_PRIVATE)
-            .getString(key, null)
-        Log.d(TAG, "currentTheme: file=\"$prefsFile\" key=\"$key\" value=\"$value\"")
+        val value = context
+            .getSharedPreferences(DVBViewerPreferences.PREFS, Context.MODE_PRIVATE)
+            .getString(DVBViewerPreferences.KEY_APP_THEME, null)
+        Log.d(TAG, "currentTheme: value=\"$value\"")
         return value ?: "blue"
     }
 }
