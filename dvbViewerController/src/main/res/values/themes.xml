@@ -43,7 +43,7 @@
         <item name="colorOutline">@color/md_theme_light_outline</item>
         <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
 
-        <!-- Legacy compat (AppCompat components) -->
+        <!-- Legacy compat -->
         <item name="colorAccent">@color/md_theme_light_secondary</item>
         <item name="colorPrimaryDark">@color/md_theme_light_primaryContainer</item>
         <item name="colorControlActivated">@color/md_theme_light_primary</item>
@@ -63,6 +63,10 @@
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
 
+        <!-- Status / nav bar -->
+        <item name="android:statusBarColor">#1565C0</item>
+        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+
     </style>
 
     <style name="Theme.DVB.NoActionBar" parent="Theme.DVB">
@@ -71,21 +75,22 @@
     </style>
 
     <!--
-        Base for all color themes.
+        Base for color themes.
 
         IMPORTANT: extends Theme.Material3.Light.NoActionBar directly, NOT Theme.DVB.
-        Reason: Activity.setTheme() calls applyStyle(resId, force=true) which processes
-        the style hierarchy leaf→root. With force=true the ROOT (last processed) wins.
-        If color themes inherited Theme.DVB, Theme.DVB's explicit colorPrimary=#1B5EAE
-        would be applied AFTER the child's custom colorPrimary, overwriting it.
-        By using Theme.Material3.Light.NoActionBar as the root (which does NOT set
-        colorPrimary to a hardcoded app value), the child's colorPrimary survives.
+        With applyStyle(force=true), the parent chain is processed AFTER the child
+        (leaf→root order), so the ROOT wins. If we inherited Theme.DVB here, Theme.DVB's
+        explicit colorPrimary, colorBackground, colorSurface etc. would overwrite the
+        child's theme-specific values.
 
-        Contains all non-primary app attributes shared by every color theme.
+        Solution: keep only attributes that are IDENTICAL for all color themes here
+        (error, tertiary, outline, legacy compat, app styles). Everything that must
+        change per theme (primary, secondary, background, surface, statusBarColor)
+        is defined directly in each child theme.
     -->
     <style name="Theme.DVB.ColorsBase" parent="Theme.Material3.Light.NoActionBar">
 
-        <!-- Tertiary — neutral, reused across all color themes -->
+        <!-- Tertiary — neutral, same for all color themes -->
         <item name="colorTertiary">@color/md_theme_light_tertiary</item>
         <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
         <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
@@ -97,15 +102,7 @@
         <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
 
-        <!-- Background / Surface — neutral, same for all themes -->
-        <item name="android:colorBackground">@color/md_theme_light_background</item>
-        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/md_theme_light_surface</item>
-        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
-        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
-
-        <!-- Outline -->
+        <!-- Outline — neutral, same for all themes -->
         <item name="colorOutline">@color/md_theme_light_outline</item>
         <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
 
@@ -122,7 +119,7 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
 
-        <!-- Colored toolbar — uses ?attr/colorPrimary set by each child theme -->
+        <!-- Colored toolbar -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
 
@@ -130,91 +127,151 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
 
+        <!-- NOTE: android:colorBackground, colorSurface, colorOnBackground, colorOnSurface,
+             colorSurfaceVariant, colorOnSurfaceVariant are intentionally NOT set here.
+             They must be defined in each child theme so they are processed FIRST in
+             the leaf→root applyStyle chain and are not overwritten by this parent. -->
+
     </style>
 
     <!-- Blue — alias for the default blue theme -->
     <style name="Theme.DVB.Blue" parent="Theme.DVB.NoActionBar" />
 
-    <!-- ── Color themes — extend ColorsBase (NOT Theme.DVB) ──────────────── -->
+    <!-- ── Color themes — extend ColorsBase; each defines its own surface/background ── -->
 
     <style name="Theme.DVB.Purple" parent="Theme.DVB.ColorsBase">
+        <!-- Primary -->
         <item name="colorPrimary">#7B1FA2</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#E1BEE7</item>
         <item name="colorOnPrimaryContainer">#4A148C</item>
+        <!-- Secondary -->
         <item name="colorSecondary">#F57C00</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorSecondaryContainer">#FFE0B2</item>
         <item name="colorOnSecondaryContainer">#3E1A00</item>
+        <!-- Background / Surface — purple-tinted -->
+        <item name="android:colorBackground">#FDF7FF</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">#FDF7FF</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Legacy compat -->
         <item name="colorAccent">#7B1FA2</item>
         <item name="colorPrimaryDark">#E1BEE7</item>
         <item name="colorControlActivated">#7B1FA2</item>
-        <item name="android:statusBarColor">#7B1FA2</item>
-        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <!-- Status / nav bar -->
+        <item name="android:statusBarColor">#6A1B9A</item>
+        <item name="android:navigationBarColor">#FDF7FF</item>
     </style>
 
     <style name="Theme.DVB.Green" parent="Theme.DVB.ColorsBase">
+        <!-- Primary -->
         <item name="colorPrimary">#1B5E20</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#C8E6C9</item>
         <item name="colorOnPrimaryContainer">#003300</item>
+        <!-- Secondary -->
         <item name="colorSecondary">#1565C0</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorSecondaryContainer">#BBDEFB</item>
         <item name="colorOnSecondaryContainer">#001E5C</item>
+        <!-- Background / Surface — green-tinted -->
+        <item name="android:colorBackground">#F6FFF7</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">#F6FFF7</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Legacy compat -->
         <item name="colorAccent">#1B5E20</item>
         <item name="colorPrimaryDark">#C8E6C9</item>
         <item name="colorControlActivated">#1B5E20</item>
+        <!-- Status / nav bar -->
         <item name="android:statusBarColor">#1B5E20</item>
-        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <item name="android:navigationBarColor">#F6FFF7</item>
     </style>
 
     <style name="Theme.DVB.Red" parent="Theme.DVB.ColorsBase">
+        <!-- Primary -->
         <item name="colorPrimary">#B71C1C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#FFCDD2</item>
         <item name="colorOnPrimaryContainer">#370000</item>
+        <!-- Secondary -->
         <item name="colorSecondary">#1565C0</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorSecondaryContainer">#BBDEFB</item>
         <item name="colorOnSecondaryContainer">#001E5C</item>
+        <!-- Background / Surface — red-tinted -->
+        <item name="android:colorBackground">#FFF8F8</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">#FFF8F8</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Legacy compat -->
         <item name="colorAccent">#B71C1C</item>
         <item name="colorPrimaryDark">#FFCDD2</item>
         <item name="colorControlActivated">#B71C1C</item>
+        <!-- Status / nav bar -->
         <item name="android:statusBarColor">#B71C1C</item>
-        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <item name="android:navigationBarColor">#FFF8F8</item>
     </style>
 
     <style name="Theme.DVB.Orange" parent="Theme.DVB.ColorsBase">
+        <!-- Primary -->
         <item name="colorPrimary">#BF360C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#FFCCBC</item>
         <item name="colorOnPrimaryContainer">#3E0000</item>
+        <!-- Secondary -->
         <item name="colorSecondary">#1565C0</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorSecondaryContainer">#BBDEFB</item>
         <item name="colorOnSecondaryContainer">#001E5C</item>
+        <!-- Background / Surface — orange-tinted -->
+        <item name="android:colorBackground">#FFF9F5</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">#FFF9F5</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Legacy compat -->
         <item name="colorAccent">#BF360C</item>
         <item name="colorPrimaryDark">#FFCCBC</item>
         <item name="colorControlActivated">#BF360C</item>
+        <!-- Status / nav bar -->
         <item name="android:statusBarColor">#BF360C</item>
-        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <item name="android:navigationBarColor">#FFF9F5</item>
     </style>
 
     <style name="Theme.DVB.Gray" parent="Theme.DVB.ColorsBase">
+        <!-- Primary -->
         <item name="colorPrimary">#263238</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorPrimaryContainer">#CFD8DC</item>
         <item name="colorOnPrimaryContainer">#0C1A1F</item>
+        <!-- Secondary -->
         <item name="colorSecondary">#2E7D32</item>
         <item name="colorOnSecondary">#FFFFFF</item>
         <item name="colorSecondaryContainer">#C8E6C9</item>
         <item name="colorOnSecondaryContainer">#003300</item>
+        <!-- Background / Surface — gray-tinted -->
+        <item name="android:colorBackground">#F8F9FA</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">#F8F9FA</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Legacy compat -->
         <item name="colorAccent">#263238</item>
         <item name="colorPrimaryDark">#CFD8DC</item>
         <item name="colorControlActivated">#263238</item>
+        <!-- Status / nav bar -->
         <item name="android:statusBarColor">#263238</item>
-        <item name="android:navigationBarColor">@color/md_theme_light_background</item>
+        <item name="android:navigationBarColor">#F8F9FA</item>
     </style>
 
 </resources>
