@@ -79,8 +79,18 @@ abstract class BaseActivity : AppCompatActivity() {
         // setTheme() MUST be called before super.onCreate() so views are inflated with the correct theme
         Log.d("ThemeDebug", "BaseActivity.onCreate: START class=${localClassName}")
         appliedTheme = ThemeHelper.currentTheme(this)
+
+        val beforeAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorPrimary))
+        Log.d("ThemeDebug", "colorPrimary BEFORE setTheme: #${Integer.toHexString(beforeAttrs.getColor(0, 0))}")
+        beforeAttrs.recycle()
+
         Log.d("ThemeDebug", "BaseActivity.onCreate: appliedTheme=\"$appliedTheme\" → calling applyTheme()")
         ThemeHelper.applyTheme(this)
+
+        val afterAttrs = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorPrimary))
+        Log.d("ThemeDebug", "colorPrimary AFTER setTheme: #${Integer.toHexString(afterAttrs.getColor(0, 0))}")
+        afterAttrs.recycle()
+
         Log.d("ThemeDebug", "BaseActivity.onCreate: applyTheme() done, calling super.onCreate()")
         super.onCreate(arg0)
         Log.d("ThemeDebug", "BaseActivity.onCreate: END theme=\"$appliedTheme\"")
