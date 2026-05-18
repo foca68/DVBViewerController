@@ -59,6 +59,10 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
 
+        <!-- Colored toolbar — responds to colorPrimary so all color themes show on AppBar -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+
     </style>
 
     <style name="Theme.DVB.NoActionBar" parent="Theme.DVB">

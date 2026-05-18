@@ -76,9 +76,11 @@ abstract class BaseActivity : AppCompatActivity() {
      * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
      */
     override fun onCreate(arg0: Bundle?) {
+        // setTheme() MUST be called before super.onCreate() so views are inflated with the correct theme
         appliedTheme = ThemeHelper.currentTheme(this)
         ThemeHelper.applyTheme(this)
         super.onCreate(arg0)
+        Log.d(TAG, "onCreate: theme applied = $appliedTheme")
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         if (!BuildConfig.DEBUG) {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -224,6 +226,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     companion object {
 
+        private const val TAG = "BaseActivity"
         const val DATA = "_uri"
 
         /**

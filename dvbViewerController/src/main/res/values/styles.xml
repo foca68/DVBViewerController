@@ -119,4 +119,27 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.Button.Pill</item>
     </style>
 
+    <!-- ===================================================================
+         Themed AppBar / Toolbar — uses colorPrimary as background so that
+         switching the color theme is visually obvious on the toolbar.
+         ThemeOverlay ensures icons/text use colorOnPrimary (white on dark).
+         =================================================================== -->
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+        <item name="actionMenuTextColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="subtitleTextColor">?attr/colorOnPrimary</item>
+        <item name="navigationIconTint">?attr/colorOnPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.App.Toolbar</item>
+    </style>
+
+    <style name="Widget.App.AppBarLayout" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
 </resources>
