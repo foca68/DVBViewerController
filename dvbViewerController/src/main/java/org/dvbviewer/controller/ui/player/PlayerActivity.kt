@@ -259,22 +259,44 @@ class PlayerActivity : AppCompatActivity() {
 
         Log.d(TAG, "initializePlayer: url=${cleanUrl.replace(authPassword, "***")}  user=\"$authUser\"")
 
+        val deinterlace     = prefs.getBoolean(DVBViewerPreferences.KEY_PLAYER_DEINTERLACE, true)
+        val deinterlaceMode = prefs.getString(DVBViewerPreferences.KEY_PLAYER_DEINTERLACE_MODE, "yadif")
+
         val spuScalePct = (currentSpuScale * 100).toInt()
-        libVLC = LibVLC(this, arrayListOf(
+        val vlcOptions = arrayListOf(
             "--network-caching=3000",
             "--clock-jitter=0",
             "--clock-synchro=0",
             "--file-caching=1500",
             "--live-caching=3000",
             "--no-audio-time-stretch",
-            "--sub-text-scale=$spuScalePct",   // subtitle text size (100 = default)
+            "--sub-text-scale=$spuScalePct",
+            "--swscale-mode=2",
+            "--postproc-q=6",
             "--verbose=0"
-        ))
+        )
+        if (deinterlace) {
+            // OMX hardware decoders output into hardware buffers; software filter pipeline
+            // cannot access them → "Failed to create video filter 'deinterlace'".
+            // --codec=avcodec forces FFmpeg decoder instead of OMX; --avcodec-hw=none
+            // additionally disables any HW acceleration within avcodec itself.
+            vlcOptions += "--codec=avcodec"
+            vlcOptions += "--avcodec-hw=none"
+            vlcOptions += "--deinterlace=1"
+            vlcOptions += "--deinterlace-mode=$deinterlaceMode"
+        }
+        Log.d("PlayerDeinterlace", "deinterlace=$deinterlace  mode=$deinterlaceMode  options=$vlcOptions")
+        libVLC = LibVLC(this, vlcOptions)
 
         mediaPlayer = MediaPlayer(libVLC).also { mp ->
             mp.attachViews(binding.vlcLayout, null, false, false)
 
             val media = Media(libVLC, android.net.Uri.parse(cleanUrl))
+            if (deinterlace) {
+                // Media-level options reinforce the instance options for per-stream control.
+                media.addOption(":deinterlace=1")
+                media.addOption(":deinterlace-mode=$deinterlaceMode")
+            }
             mp.media = media
             media.release()
 

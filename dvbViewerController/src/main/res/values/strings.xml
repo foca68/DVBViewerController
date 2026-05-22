@@ -142,6 +142,10 @@
     <string name="pref_player_subtitle_size">Subtitle size (sp)</string>
     <string name="pref_player_pip_title">Automatic Picture-in-Picture</string>
     <string name="pref_player_pip_summary">Enable PiP when Home button is pressed</string>
+    <string name="pref_player_deinterlace_title">Deinterlace</string>
+    <string name="pref_player_deinterlace_summary">Apply deinterlacing for interlaced streams (576i/1080i)</string>
+    <string name="pref_player_deinterlace_mode_title">Deinterlace mode</string>
+    <string name="pref_player_deinterlace_mode_summary">Algorithm used for deinterlacing</string>
     <!-- Player UI strings -->
     <string name="player_connecting">Connecting to server…</string>
     <string name="player_timeout">Server not responding. Retry?</string>

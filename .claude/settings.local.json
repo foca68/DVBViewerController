@@ -10,7 +10,16 @@
       "Bash(git push *)",
       "Bash(JAVA_HOME=\"C:/Program Files/Android/Android Studio/jbr\" ./gradlew :dvbViewerController:assembleBetaDebug)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git tag *)",
+      "Read(//tmp/**)",
+      "Bash(jar tf *)",
+      "Bash(unzip -q extracted/classes.jar -d classes)",
+      "Bash(\"/c/Program Files/Android/Android Studio/jbr/bin/javap.exe\" -p -classpath /tmp/libvlc_inspect/classes org.videolan.libvlc.MediaPlayer)",
+      "Bash(\"/c/Program Files/Android/Android Studio/jbr/bin/javap.exe\" -p -classpath /tmp/libvlc_inspect/classes org.videolan.libvlc.interfaces.IVLCVout)",
+      "Bash(\"/c/Program Files/Android/Android Studio/jbr/bin/javap.exe\" -p -classpath /tmp/libvlc_inspect/classes org.videolan.libvlc.VideoHelper)",
+      "Bash(\"/c/Program Files/Android/Android Studio/jbr/bin/javap.exe\" -p -classpath /tmp/libvlc_inspect/classes org.videolan.libvlc.media.MediaPlayer)",
+      "Bash(grep -v \"^$\")"
     ]
   }
 }

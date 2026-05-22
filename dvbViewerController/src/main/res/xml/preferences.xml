@@ -63,6 +63,21 @@
             android:summary="@string/pref_player_pip_summary"
             android:title="@string/pref_player_pip_title" />
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="KEY_PLAYER_DEINTERLACE"
+            android:summary="@string/pref_player_deinterlace_summary"
+            android:title="@string/pref_player_deinterlace_title" />
+
+        <ListPreference
+            android:defaultValue="yadif2x"
+            android:dependency="KEY_PLAYER_DEINTERLACE"
+            android:entries="@array/pref_deinterlace_mode_entries"
+            android:entryValues="@array/pref_deinterlace_mode_values"
+            android:key="KEY_PLAYER_DEINTERLACE_MODE"
+            android:summary="@string/pref_player_deinterlace_mode_summary"
+            android:title="@string/pref_player_deinterlace_mode_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_seperator_xmltv">

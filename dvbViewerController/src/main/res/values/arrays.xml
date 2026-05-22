@@ -52,6 +52,21 @@
         <item>orange</item>
         <item>gray</item>
     </string-array>
+    <!-- Deinterlace mode options -->
+    <string-array name="pref_deinterlace_mode_entries">
+        <item>Yadif2x (best quality)</item>
+        <item>Yadif</item>
+        <item>Blend (fastest)</item>
+        <item>Mean</item>
+        <item>Bob</item>
+    </string-array>
+    <string-array name="pref_deinterlace_mode_values" translatable="false">
+        <item>yadif2x</item>
+        <item>yadif</item>
+        <item>blend</item>
+        <item>mean</item>
+        <item>bob</item>
+    </string-array>
     <!-- XMLTV refresh interval options -->
     <string-array name="pref_xmltv_interval_entries">
         <item>1 hour</item>

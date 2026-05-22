@@ -63,9 +63,11 @@ public class DVBViewerPreferences {
      * XMLTV / External EPG Keys
      */
     /** Internal player preferences */
-    public static final String KEY_USE_INTERNAL_PLAYER   = "KEY_USE_INTERNAL_PLAYER";
-    public static final String KEY_PLAYER_SUBTITLE_SIZE  = "KEY_PLAYER_SUBTITLE_SIZE";
-    public static final String KEY_PLAYER_PIP_ON_HOME    = "KEY_PLAYER_PIP_ON_HOME";
+    public static final String KEY_USE_INTERNAL_PLAYER      = "KEY_USE_INTERNAL_PLAYER";
+    public static final String KEY_PLAYER_SUBTITLE_SIZE     = "KEY_PLAYER_SUBTITLE_SIZE";
+    public static final String KEY_PLAYER_PIP_ON_HOME       = "KEY_PLAYER_PIP_ON_HOME";
+    public static final String KEY_PLAYER_DEINTERLACE       = "KEY_PLAYER_DEINTERLACE";
+    public static final String KEY_PLAYER_DEINTERLACE_MODE  = "KEY_PLAYER_DEINTERLACE_MODE";
 
     public static final String KEY_APP_THEME = "KEY_APP_THEME";
 
