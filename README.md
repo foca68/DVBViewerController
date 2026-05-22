@@ -1,5 +1,7 @@
 # DVBViewerController
 
+![Downloads](https://img.shields.io/github/downloads/foca68/DVBViewerController/total?style=flat-square)
+
 Modernized fork of [DVBViewer Controller](https://github.com/RayBa82/DVBViewerController) by RayBa82.
 
 With DVBViewer Controller you can browse the EPG, manage your timers and recordings and even stream live TV from [DVBViewer Recording Service](http://en.dvbviewer.tv/wiki/DVBViewer_Recording_Service) on your Android device.
